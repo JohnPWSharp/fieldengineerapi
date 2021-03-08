@@ -12,5 +12,7 @@ namespace FieldEngineerApi.Models
         }
 
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<AppointmentStatus> AppointmentStatuses { get; set; }
+
     }
 }

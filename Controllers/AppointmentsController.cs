@@ -80,7 +80,7 @@ namespace FieldEngineerApi.Controllers
             _context.Appointments.Add(appointment);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetAppointment), new { id = appointment.Id }, appointment);
+            return CreatedAtAction("GetAppointment", new { id = appointment.Id }, appointment);
         }
 
         // DELETE: api/Appointments/5

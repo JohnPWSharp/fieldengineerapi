@@ -80,7 +80,7 @@ namespace FieldEngineerApi.Controllers
             _context.BoilerParts.Add(boilerPart);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetBoilerPart), new { id = boilerPart.Id }, boilerPart);
+            return CreatedAtAction("GetBoilerPart", new { id = boilerPart.Id }, boilerPart);
         }
 
         // DELETE: api/BoilerParts/5

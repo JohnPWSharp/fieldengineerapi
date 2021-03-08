@@ -1,9 +1,11 @@
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FieldEngineerApi.Models
 {
     public class BoilerPart
     {
+        [Key]
         public long Id { get; set; }
         public string Name { get; set; }
         public long ContainedInId { get; set; }

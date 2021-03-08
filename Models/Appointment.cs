@@ -6,6 +6,7 @@ namespace FieldEngineerApi.Models
 
     public class Appointment
     {
+        [Key]
         public long Id { get; set; }
         [Required]
         public string CustomerName { get; set; }
@@ -14,7 +15,8 @@ namespace FieldEngineerApi.Models
         public string ProblemDetails { get; set; }
         public string ContactNumber { get; set; }
         [Required]
-        public string Status { get; set; }
+        public long StatusId { get; set; }
+        public virtual AppointmentStatus AppointmentStatus { get; set; }
 
         [Display(Name = "StartTime")]
         [DataType(DataType.DateTime)]

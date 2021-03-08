@@ -22,10 +22,15 @@ namespace FieldEngineerApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<BoilerPartsContext>(opt => opt.UseInMemoryDatabase("WarehouseDB"));
-            services.AddDbContext<AppointmentsContext>(opt => opt.UseInMemoryDatabase("SchedulesDB"));
-            services.AddDbContext<OrdersContext>(opt => opt.UseInMemoryDatabase("PurchasingDB"));
-            //services.AddDbContext<AppointmentsContext>(options => options.UseMySQL(Configuration.GetConnectionString("SchedulesDb")));
+            //In memory Db Context registrations
+            //services.AddDbContext<BoilerPartsContext>(opt => opt.UseInMemoryDatabase("WarehouseDB"));
+            //services.AddDbContext<AppointmentsContext>(opt => opt.UseInMemoryDatabase("SchedulesDB"));
+            //services.AddDbContext<OrdersContext>(opt => opt.UseInMemoryDatabase("PurchasingDB"));
+            //SQL Server Db Context registrations.
+            services.AddDbContext<BoilerPartsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("WarehouseDb")));
+            services.AddDbContext<AppointmentsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SchedulesDb")));
+            services.AddDbContext<OrdersContext>(options => options.UseSqlServer(Configuration.GetConnectionString("PurchasingDb")));
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
