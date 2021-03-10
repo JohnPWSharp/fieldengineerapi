@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FieldEngineerApi.Models;
@@ -13,9 +12,9 @@ namespace FieldEngineerApi.Controllers
     [ApiController]
     public class AppointmentsController : ControllerBase
     {
-        private readonly AppointmentsContext _context;
+        private readonly ScheduleContext _context;
 
-        public AppointmentsController(AppointmentsContext context)
+        public AppointmentsController(ScheduleContext context)
         {
             _context = context;
         }
@@ -25,6 +24,32 @@ namespace FieldEngineerApi.Controllers
         public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments()
         {
             return await _context.Appointments.ToListAsync();
+        }
+
+        // GET: api/Appointments/Next
+        [HttpGet("Next")]
+        public async Task<ActionResult<Appointment>> GetNextAppointment()
+        {
+            var nextAppointment = await _context.Appointments.OrderByDescending(s => s.StartDateTime).FirstOrDefaultAsync();
+
+            if (nextAppointment == null)
+            {
+                return NotFound();
+            }
+
+            return nextAppointment;
+        }
+
+        // GET: api/Appointments/Today
+        [HttpGet("Today")]
+        public async Task<ActionResult<IEnumerable<Appointment>>> GetTodaysAppointments()
+        {
+            var startDateTime = DateTime.Today;
+            var endDateTime = DateTime.Today.AddDays(1).AddTicks(-1);
+
+            return await _context.Appointments.OrderByDescending(s => s.StartDateTime)
+                .Where(s => s.StartDateTime >= startDateTime && s.StartDateTime <= endDateTime).ToListAsync();
+    
         }
 
         // GET: api/Appointments/5

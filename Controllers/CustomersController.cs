@@ -9,49 +9,49 @@ using FieldEngineerApi.Models;
 
 namespace FieldEngineerApi.Controllers
 {
-    [Route("api/BoilerParts")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class BoilerPartsController : ControllerBase
+    public class CustomersController : ControllerBase
     {
-        private readonly InventoryContext _context;
+        private readonly ScheduleContext _context;
 
-        public BoilerPartsController(InventoryContext context)
+        public CustomersController(ScheduleContext context)
         {
             _context = context;
         }
 
-        // GET: api/BoilerParts
+        // GET: api/Customers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BoilerPart>>> GetBoilerParts()
+        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
         {
-            return await _context.BoilerParts.ToListAsync();
+            return await _context.Customers.ToListAsync();
         }
 
-        // GET: api/BoilerParts/5
+        // GET: api/Customers/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<BoilerPart>> GetBoilerPart(long id)
+        public async Task<ActionResult<Customer>> GetCustomer(long id)
         {
-            var boilerPart = await _context.BoilerParts.FindAsync(id);
+            var customer = await _context.Customers.FindAsync(id);
 
-            if (boilerPart == null)
+            if (customer == null)
             {
                 return NotFound();
             }
 
-            return boilerPart;
+            return customer;
         }
 
-        // PUT: api/BoilerParts/5
+        // PUT: api/Customers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBoilerPart(long id, BoilerPart boilerPart)
+        public async Task<IActionResult> PutCustomer(long id, Customer customer)
         {
-            if (id != boilerPart.Id)
+            if (id != customer.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(boilerPart).State = EntityState.Modified;
+            _context.Entry(customer).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +59,7 @@ namespace FieldEngineerApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BoilerPartExists(id))
+                if (!CustomerExists(id))
                 {
                     return NotFound();
                 }
@@ -72,36 +72,36 @@ namespace FieldEngineerApi.Controllers
             return NoContent();
         }
 
-        // POST: api/BoilerParts
+        // POST: api/Customers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<BoilerPart>> PostBoilerPart(BoilerPart boilerPart)
+        public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
         {
-            _context.BoilerParts.Add(boilerPart);
+            _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBoilerPart", new { id = boilerPart.Id }, boilerPart);
+            return CreatedAtAction("GetCustomer", new { id = customer.Id }, customer);
         }
 
-        // DELETE: api/BoilerParts/5
+        // DELETE: api/Customers/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBoilerPart(long id)
+        public async Task<IActionResult> DeleteCustomer(long id)
         {
-            var boilerPart = await _context.BoilerParts.FindAsync(id);
-            if (boilerPart == null)
+            var customer = await _context.Customers.FindAsync(id);
+            if (customer == null)
             {
                 return NotFound();
             }
 
-            _context.BoilerParts.Remove(boilerPart);
+            _context.Customers.Remove(customer);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool BoilerPartExists(long id)
+        private bool CustomerExists(long id)
         {
-            return _context.BoilerParts.Any(e => e.Id == id);
+            return _context.Customers.Any(e => e.Id == id);
         }
     }
 }

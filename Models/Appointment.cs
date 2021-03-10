@@ -9,15 +9,14 @@ namespace FieldEngineerApi.Models
         [Key]
         public long Id { get; set; }
         [Required]
-        public string CustomerName { get; set; }
-        [Required]
-        public string CustomerAddress { get; set; }
+        public long CustomerId { get; set; }
+        public virtual Customer Customer { get; set; }
         public string ProblemDetails { get; set; }
-        public string ContactNumber { get; set; }
         [Required]
-        public long StatusId { get; set; }
+        public long AppointmentStatusId { get; set; }
         public virtual AppointmentStatus AppointmentStatus { get; set; }
-
+        public long EngineerId { get; set; }
+        public virtual ScheduleEngineer Engineer { get ; set; }
         [Display(Name = "StartTime")]
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy H:mm:ss}")]

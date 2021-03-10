@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,11 +9,17 @@ namespace FieldEngineerApi.Models
         public long Id { get; set; }
         public long BoilerPartId { get; set; }
         public virtual BoilerPart BoilerPart { get; set; }
-        public string BoilerPartName { get; set; }
         public long quantity { get; set; }
         [Column(TypeName = "money")]
-        public decimal ItemPrice { get; set; }
-        [Column(TypeName = "money")]
         public decimal TotalPrice { get; set; }
+        [Display(Name = "OrderedDate")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime OrderedDateTime { get; set; }
+        public bool Delivered { get; set; }
+        [Display(Name = "DeliveredDate")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime DeliveredDateTime { get; set; }
     }
 }

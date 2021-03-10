@@ -23,14 +23,12 @@ namespace FieldEngineerApi
         public void ConfigureServices(IServiceCollection services)
         {
             //In memory Db Context registrations
-            //services.AddDbContext<BoilerPartsContext>(opt => opt.UseInMemoryDatabase("WarehouseDB"));
-            //services.AddDbContext<AppointmentsContext>(opt => opt.UseInMemoryDatabase("SchedulesDB"));
-            //services.AddDbContext<OrdersContext>(opt => opt.UseInMemoryDatabase("PurchasingDB"));
+            //services.AddDbContext<InventoryContext>(opt => opt.UseInMemoryDatabase("InventoryDB"));
+            //services.AddDbContext<ScheduleContext>(opt => opt.UseInMemoryDatabase("SchedulesDB"));
             //SQL Server Db Context registrations.
-            services.AddDbContext<BoilerPartsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("WarehouseDb")));
-            services.AddDbContext<AppointmentsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SchedulesDb")));
-            services.AddDbContext<OrdersContext>(options => options.UseSqlServer(Configuration.GetConnectionString("PurchasingDb")));
-
+            services.AddDbContext<InventoryContext>(options => options.UseSqlServer(Configuration.GetConnectionString("InventoryDb")));
+            services.AddDbContext<ScheduleContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SchedulesDb")));
+            
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

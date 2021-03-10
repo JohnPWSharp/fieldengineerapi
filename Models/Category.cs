@@ -3,12 +3,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FieldEngineerApi.Models
 {
-    public class AppointmentStatus {
+
+    public class Category {
         [Key]
         public long Id { get; set; }
-        public string StatusName { get; set; }
+        public string Name { get; set; }
 
-        public virtual ICollection<Appointment> Appointments { get; set; }
+        public virtual ICollection<BoilerPart> BoilerParts { get; set; }
     }
 
 }

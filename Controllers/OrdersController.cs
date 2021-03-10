@@ -13,9 +13,9 @@ namespace FieldEngineerApi.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly OrdersContext _context;
+        private readonly InventoryContext _context;
 
-        public OrdersController(OrdersContext context)
+        public OrdersController(InventoryContext context)
         {
             _context = context;
         }
@@ -39,6 +39,25 @@ namespace FieldEngineerApi.Controllers
             }
 
             return order;
+        }
+
+        // GET: api/Orders/Open
+        [HttpGet("Open")]
+        public async Task<ActionResult<IEnumerable<Order>>> GetOpenOrders()
+        {
+            return await _context.Orders
+                .Where(o => o.Delivered == false)
+                .OrderByDescending(o => o.OrderedDateTime)
+                .ToListAsync();
+        }
+
+        [HttpGet("Delivered")]
+        public async Task<ActionResult<IEnumerable<Order>>> GetDeliveredOrders()
+        {
+            return await _context.Orders
+                .Where(o => o.Delivered == true)
+                .OrderByDescending(o => o.DeliveredDateTime)
+                .ToListAsync();
         }
 
         // PUT: api/Orders/5
