@@ -28,6 +28,7 @@ namespace FieldEngineerApi
             //SQL Server Db Context registrations.
             services.AddDbContext<InventoryContext>(options => options.UseSqlServer(Configuration.GetConnectionString("InventoryDb")));
             services.AddDbContext<ScheduleContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SchedulesDb")));
+            services.AddDbContext<KnowledgeBaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("KnowledgeDb")));
             
             services.AddControllers();
             services.AddSwaggerGen(c =>
