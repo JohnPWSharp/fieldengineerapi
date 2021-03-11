@@ -8,7 +8,7 @@ namespace FieldEngineerApi.Migrations.Inventory
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Category",
+                name: "Categories",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -17,7 +17,7 @@ namespace FieldEngineerApi.Migrations.Inventory
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Category", x => x.Id);
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -36,9 +36,9 @@ namespace FieldEngineerApi.Migrations.Inventory
                 {
                     table.PrimaryKey("PK_BoilerParts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BoilerParts_Category_CategoryId",
+                        name: "FK_BoilerParts_Categories_CategoryId",
                         column: x => x.CategoryId,
-                        principalTable: "Category",
+                        principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -51,7 +51,6 @@ namespace FieldEngineerApi.Migrations.Inventory
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BoilerPartId = table.Column<long>(type: "bigint", nullable: false),
                     quantity = table.Column<long>(type: "bigint", nullable: false),
-                    ItemPrice = table.Column<decimal>(type: "money", nullable: false),
                     TotalPrice = table.Column<decimal>(type: "money", nullable: false),
                     OrderedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Delivered = table.Column<bool>(type: "bit", nullable: false),
@@ -67,6 +66,38 @@ namespace FieldEngineerApi.Migrations.Inventory
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1L, "Boiler" },
+                    { 2L, "Sprocket" },
+                    { 3L, "Flange" },
+                    { 4L, "Exchanger" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "BoilerParts",
+                columns: new[] { "Id", "CategoryId", "Name", "NumberInStock", "Overview", "Price" },
+                values: new object[,]
+                {
+                    { 3L, 1L, "Ageless Beauty Clay", 5, "Add some fashion to your floors with the Shaw Ageless Beauty Carpet collection.", 1.98m },
+                    { 2L, 2L, "Caserta Sky Grey", 30, "Extreme Series 18 in. x 18 in. carpet tiles are a durable and beautiful carpet solution specially engineered for both indoor and outdoor residential installations.", 8.1m },
+                    { 1L, 3L, "Caserta Stone Beige", 25, "Extreme Series 18 in. x 18 in. carpet tiles are a durable and beautiful carpet solution specially engineered for both indoor and outdoor residential installations.", 8.1m },
+                    { 4L, 4L, "Lush II Tundra", 12, "Made with 100% premium nylon fiber, this textured carpet creates a warm, casual atmosphere that invites you to relax and thoroughly enjoy your home.", 3.79m }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Orders",
+                columns: new[] { "Id", "BoilerPartId", "Delivered", "DeliveredDateTime", "OrderedDateTime", "TotalPrice", "quantity" },
+                values: new object[] { 2L, 3L, true, new DateTime(2021, 3, 7, 9, 58, 35, 853, DateTimeKind.Local).AddTicks(6975), new DateTime(2021, 3, 4, 9, 58, 35, 853, DateTimeKind.Local).AddTicks(6952), 39.6m, 20L });
+
+            migrationBuilder.InsertData(
+                table: "Orders",
+                columns: new[] { "Id", "BoilerPartId", "Delivered", "DeliveredDateTime", "OrderedDateTime", "TotalPrice", "quantity" },
+                values: new object[] { 1L, 1L, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 3, 6, 9, 58, 35, 851, DateTimeKind.Local).AddTicks(251), 243.0m, 30L });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BoilerParts_CategoryId",
@@ -88,7 +119,7 @@ namespace FieldEngineerApi.Migrations.Inventory
                 name: "BoilerParts");
 
             migrationBuilder.DropTable(
-                name: "Category");
+                name: "Categories");
         }
     }
 }

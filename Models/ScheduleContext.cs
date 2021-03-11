@@ -90,7 +90,7 @@ namespace FieldEngineerApi.Models
                     AppointmentStatusId = 3, 
                     EngineerId = 1, 
                     StartDateTime = DateTime.Now.AddDays(-10),
-                    Notes = "Installed a new diverter valva"
+                    Notes = "Installed a new diverter valve"
                 },
                 new Appointment {
                     Id = 2,
@@ -109,6 +109,15 @@ namespace FieldEngineerApi.Models
                     EngineerId = 2,
                     StartDateTime = DateTime.Now.AddDays(-7),
                     Notes = "Bled radiators."
+                },
+                new Appointment {
+                    Id = 4,
+                    CustomerId = 1,
+                    ProblemDetails = "Boiler wont start",
+                    AppointmentStatusId = 3, 
+                    EngineerId = 1, 
+                    StartDateTime = DateTime.Now.AddDays(-5),
+                    Notes = "Installed a second new diverter valve"
                 }
             );
         }

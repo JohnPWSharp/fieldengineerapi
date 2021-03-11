@@ -161,7 +161,7 @@ namespace FieldEngineerApi.Migrations.Inventory
                             BoilerPartId = 1L,
                             Delivered = false,
                             DeliveredDateTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            OrderedDateTime = new DateTime(2021, 3, 5, 17, 29, 45, 692, DateTimeKind.Local).AddTicks(7244),
+                            OrderedDateTime = new DateTime(2021, 3, 6, 9, 58, 35, 851, DateTimeKind.Local).AddTicks(251),
                             TotalPrice = 243.0m,
                             quantity = 30L
                         },
@@ -170,8 +170,8 @@ namespace FieldEngineerApi.Migrations.Inventory
                             Id = 2L,
                             BoilerPartId = 3L,
                             Delivered = true,
-                            DeliveredDateTime = new DateTime(2021, 3, 6, 17, 29, 45, 695, DateTimeKind.Local).AddTicks(2442),
-                            OrderedDateTime = new DateTime(2021, 3, 3, 17, 29, 45, 695, DateTimeKind.Local).AddTicks(2416),
+                            DeliveredDateTime = new DateTime(2021, 3, 7, 9, 58, 35, 853, DateTimeKind.Local).AddTicks(6975),
+                            OrderedDateTime = new DateTime(2021, 3, 4, 9, 58, 35, 853, DateTimeKind.Local).AddTicks(6952),
                             TotalPrice = 39.6m,
                             quantity = 20L
                         });

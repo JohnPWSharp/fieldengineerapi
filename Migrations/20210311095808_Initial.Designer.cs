@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FieldEngineerApi.Migrations
 {
     [DbContext(typeof(ScheduleContext))]
-    [Migration("20210310144718_Initial")]
+    [Migration("20210311095808_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,6 +55,48 @@ namespace FieldEngineerApi.Migrations
                     b.HasIndex("EngineerId");
 
                     b.ToTable("Appointments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            AppointmentStatusId = 3L,
+                            CustomerId = 1L,
+                            EngineerId = 1L,
+                            Notes = "Installed a new diverter valve",
+                            ProblemDetails = "Boiler wont start",
+                            StartDateTime = new DateTime(2021, 3, 1, 9, 58, 8, 204, DateTimeKind.Local).AddTicks(2790)
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            AppointmentStatusId = 2L,
+                            CustomerId = 2L,
+                            EngineerId = 2L,
+                            Notes = "Needed a new heat exchanger",
+                            ProblemDetails = "Can't change temperature",
+                            StartDateTime = new DateTime(2021, 3, 3, 9, 58, 8, 207, DateTimeKind.Local).AddTicks(7229)
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            AppointmentStatusId = 2L,
+                            CustomerId = 3L,
+                            EngineerId = 2L,
+                            Notes = "Bled radiators.",
+                            ProblemDetails = "Radiators aren't working",
+                            StartDateTime = new DateTime(2021, 3, 4, 9, 58, 8, 207, DateTimeKind.Local).AddTicks(7259)
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            AppointmentStatusId = 3L,
+                            CustomerId = 1L,
+                            EngineerId = 1L,
+                            Notes = "Installed a second new diverter valve",
+                            ProblemDetails = "Boiler wont start",
+                            StartDateTime = new DateTime(2021, 3, 6, 9, 58, 8, 207, DateTimeKind.Local).AddTicks(7264)
+                        });
                 });
 
             modelBuilder.Entity("FieldEngineerApi.Models.AppointmentStatus", b =>
@@ -75,12 +117,17 @@ namespace FieldEngineerApi.Migrations
                         new
                         {
                             Id = 1L,
-                            StatusName = "Open"
+                            StatusName = "Unresolved"
                         },
                         new
                         {
                             Id = 2L,
-                            StatusName = "Resolved"
+                            StatusName = "Parts Ordered"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            StatusName = "Fixed"
                         });
                 });
 
@@ -104,6 +151,50 @@ namespace FieldEngineerApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Customers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Address = "4567 Main St Buffalo, NY 98052",
+                            ContactNumber = "555-0199",
+                            Name = "Damayanti Basumatary"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Address = "4568 Main St Buffalo, NY 98052",
+                            ContactNumber = "555-0200",
+                            Name = "Deepali Haloi"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Address = "4569 Main St Buffalo, NY 98052",
+                            ContactNumber = "555-0201",
+                            Name = "Hua Long"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            Address = "4570 Main St Buffalo, NY 98052",
+                            ContactNumber = "555-0202",
+                            Name = "Volha Pashkevich"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            Address = "4571 Main St Buffalo, NY 98053",
+                            ContactNumber = "555-0203",
+                            Name = "Veselin Iliev"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            Address = "4571 Main St Buffalo, NY 98054",
+                            ContactNumber = "555-0204",
+                            Name = "Tsehayetu Abera"
+                        });
                 });
 
             modelBuilder.Entity("FieldEngineerApi.Models.ScheduleEngineer", b =>
@@ -123,6 +214,26 @@ namespace FieldEngineerApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Engineers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            ContactNumber = "554-1000",
+                            Name = "Sara Perez"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            ContactNumber = "554-1001",
+                            Name = "Michelle Harris"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            ContactNumber = "554-1002",
+                            Name = "Quincy Watson"
+                        });
                 });
 
             modelBuilder.Entity("FieldEngineerApi.Models.Appointment", b =>

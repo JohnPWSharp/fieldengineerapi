@@ -61,9 +61,9 @@ namespace FieldEngineerApi.Migrations
                             AppointmentStatusId = 3L,
                             CustomerId = 1L,
                             EngineerId = 1L,
-                            Notes = "Installed a new diverter valva",
+                            Notes = "Installed a new diverter valve",
                             ProblemDetails = "Boiler wont start",
-                            StartDateTime = new DateTime(2021, 2, 28, 17, 29, 21, 576, DateTimeKind.Local).AddTicks(7101)
+                            StartDateTime = new DateTime(2021, 3, 1, 9, 58, 8, 204, DateTimeKind.Local).AddTicks(2790)
                         },
                         new
                         {
@@ -73,7 +73,7 @@ namespace FieldEngineerApi.Migrations
                             EngineerId = 2L,
                             Notes = "Needed a new heat exchanger",
                             ProblemDetails = "Can't change temperature",
-                            StartDateTime = new DateTime(2021, 3, 2, 17, 29, 21, 579, DateTimeKind.Local).AddTicks(2438)
+                            StartDateTime = new DateTime(2021, 3, 3, 9, 58, 8, 207, DateTimeKind.Local).AddTicks(7229)
                         },
                         new
                         {
@@ -83,7 +83,17 @@ namespace FieldEngineerApi.Migrations
                             EngineerId = 2L,
                             Notes = "Bled radiators.",
                             ProblemDetails = "Radiators aren't working",
-                            StartDateTime = new DateTime(2021, 3, 3, 17, 29, 21, 579, DateTimeKind.Local).AddTicks(2465)
+                            StartDateTime = new DateTime(2021, 3, 4, 9, 58, 8, 207, DateTimeKind.Local).AddTicks(7259)
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            AppointmentStatusId = 3L,
+                            CustomerId = 1L,
+                            EngineerId = 1L,
+                            Notes = "Installed a second new diverter valve",
+                            ProblemDetails = "Boiler wont start",
+                            StartDateTime = new DateTime(2021, 3, 6, 9, 58, 8, 207, DateTimeKind.Local).AddTicks(7264)
                         });
                 });
 
