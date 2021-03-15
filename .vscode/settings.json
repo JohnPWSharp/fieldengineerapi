@@ -1,0 +1,5 @@
+{
+    "appService.preDeployTask": "publish-release",
+    "appService.deploySubpath": "bin\\Release\\net5.0\\publish",
+    "appService.defaultWebAppToDeploy": "/subscriptions/ce698c92-57c9-43df-b269-2e10273a0425/resourceGroups/appsvc_windows_centralus/providers/Microsoft.Web/sites/FieldEngineer"
+}

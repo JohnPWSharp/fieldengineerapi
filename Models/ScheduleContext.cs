@@ -59,7 +59,7 @@ namespace FieldEngineerApi.Models
                 new Customer {
                     Id = 6,
                     Name = "Tsehayetu Abera",
-                    Address = "4571 Main St Buffalo, NY 98054",
+                    Address = "4572 Main St Buffalo, NY 98054",
                     ContactNumber = "555-0204"
                 }
             );
