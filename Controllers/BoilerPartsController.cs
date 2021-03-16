@@ -42,7 +42,6 @@ namespace FieldEngineerApi.Controllers
         }
 
         // PUT: api/BoilerParts/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBoilerPart(long id, BoilerPart boilerPart)
         {
@@ -73,7 +72,6 @@ namespace FieldEngineerApi.Controllers
         }
 
         // POST: api/BoilerParts
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<BoilerPart>> PostBoilerPart(BoilerPart boilerPart)
         {

@@ -22,6 +22,7 @@ namespace FieldEngineerApi.Models
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy H:mm:ss}")]
         public DateTime StartDateTime { get; set; }
         public string Notes { get; set; }
+        public string ImageUrl { get; set; }
     }
 
 }

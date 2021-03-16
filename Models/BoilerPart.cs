@@ -15,8 +15,7 @@ namespace FieldEngineerApi.Models
         //public virtual BoilerPart ContainedIn { get; set; }
         //[ForeignKey(nameof(ContainedInId))]
         //public virtual ICollection<BoilerPart> Contains { get; set; }
-        public long CategoryId { get; set; }
-        public virtual Category Category { get; set; }
+        public string CategoryId { get; set; }
         [Column(TypeName = "money")]
         public decimal Price { get; set; }
         public string Overview { get; set; }
