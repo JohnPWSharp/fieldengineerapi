@@ -102,6 +102,9 @@ namespace FieldEngineerApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Appointment>> PostAppointment(Appointment appointment)
         {
+            // Set the status to unresolved
+            appointment.AppointmentStatusId = 1;
+
             _context.Appointments.Add(appointment);
             await _context.SaveChangesAsync();
 

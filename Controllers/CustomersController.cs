@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FieldEngineerApi.Models;
@@ -41,9 +39,18 @@ namespace FieldEngineerApi.Controllers
             return customer;
         }
 
+        //GET: api/Customers/5/Appointments
+        [HttpGet("{id}/Appointments")]
+        public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments(long id)
+        {
+            return await _context.Appointments
+                .Where(a => a.CustomerId == id)
+                .OrderByDescending(a => a.StartDateTime)
+                .ToListAsync();
+        }
+
         //GET: api/Customers/5/Notes
         [HttpGet("{id}/Notes")]
-        //public async Task<ActionResult<IEnumerable<string>>> GetNotes(long id)
         public async Task<ActionResult<IEnumerable<object>>> GetNotes(long id)
         {
             return await _context.Appointments
@@ -54,7 +61,6 @@ namespace FieldEngineerApi.Controllers
         }
 
         // PUT: api/Customers/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCustomer(long id, Customer customer)
         {

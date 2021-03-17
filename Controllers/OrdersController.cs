@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -92,6 +93,15 @@ namespace FieldEngineerApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Order>> PostOrder(Order order)
         {
+            // Get the Boiler Part to check the price
+            var part = await _context.BoilerParts.FindAsync(order.BoilerPartId);
+
+            // Set the total price and other properties
+            order.TotalPrice = part.Price * order.quantity;
+            order.OrderedDateTime = DateTime.Now;
+            order.Delivered = false;
+            order.DeliveredDateTime = null;
+
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 

@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json.Serialization;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,6 +9,7 @@ namespace FieldEngineerApi.Models
         [Key]
         public long Id { get; set; }
         public long BoilerPartId { get; set; }
+        [JsonIgnore]
         public virtual BoilerPart BoilerPart { get; set; }
         public long quantity { get; set; }
         [Column(TypeName = "money")]
@@ -20,6 +22,6 @@ namespace FieldEngineerApi.Models
         [Display(Name = "DeliveredDate")]
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime DeliveredDateTime { get; set; }
+        public DateTime? DeliveredDateTime { get; set; }
     }
 }

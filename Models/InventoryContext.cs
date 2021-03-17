@@ -21,35 +21,57 @@ namespace FieldEngineerApi.Models
             modelBuilder.Entity<BoilerPart>().HasData(
                 new BoilerPart {
                     Id = 1,
-                    Name = "Caserta Stone Beige",
-                    CategoryId = "Flange",
-                    Price = 8.1M,
-                    Overview = "Extreme Series 18 in. x 18 in. carpet tiles are a durable and beautiful carpet solution specially engineered for both indoor and outdoor residential installations.",
-                    NumberInStock = 25
+                    Name = "Pumped Water Controller",
+                    CategoryId = "PCB Assembly",
+                    Price = 45.99M,
+                    Overview = "Water pump controller for combination boiler",
+                    NumberInStock = 0,
+                    ImageUrl = "http://contoso.com/image1"
                 },
                 new BoilerPart {
                     Id = 2,
-                    Name = "Caserta Sky Grey",
-                    CategoryId = "Sprocket",
-                    Price = 8.1M,
-                    Overview = "Extreme Series 18 in. x 18 in. carpet tiles are a durable and beautiful carpet solution specially engineered for both indoor and outdoor residential installations.",
-                    NumberInStock = 30
+                    Name = "3.5 W/S Heater",
+                    CategoryId = "Heat Exchanger",
+                    Price = 125.5M,
+                    Overview = "Small heat exchanger for domestic boiler",
+                    NumberInStock = 5,
+                    ImageUrl = "http://contoso.com/image2"
                 },
                 new BoilerPart {
                     Id = 3, 
-                    Name = "Ageless Beauty Clay",
-                    CategoryId = "Boiler",
-                    Price = 1.98M,
-                    Overview = "Add some fashion to your floors with the Shaw Ageless Beauty Carpet collection.",
-                    NumberInStock = 5
+                    Name = "Inlet Valve",
+                    CategoryId = "Valve",
+                    Price = 120.2M,
+                    Overview = "Water inlet valve with one-way operation",
+                    NumberInStock = 13,
+                    ImageUrl = "http://contoso.com/image3"
                 },
                 new BoilerPart {
                     Id = 4,
-                    Name = "Lush II Tundra",
-                    CategoryId = "Exchanger",
-                    Price = 3.79M,
-                    Overview = "Made with 100% premium nylon fiber, this textured carpet creates a warm, casual atmosphere that invites you to relax and thoroughly enjoy your home.",
-                    NumberInStock = 12
+                    Name = "Mid-position Valve",
+                    CategoryId = "Valve",
+                    Price = 180.9M,
+                    Overview = "Bi-directional pressure release",
+                    NumberInStock = 8,
+                    ImageUrl = "http://contoso.com/image4"
+                },
+                new BoilerPart {
+                    Id = 5,
+                    Name = "5.0 W/S Heater",
+                    CategoryId = "Heat Exchanger",
+                    Price = 145.9M,
+                    Overview = "Medium heat exchanger for canteen boiler",
+                    NumberInStock = 1,
+                    ImageUrl = "http://contoso.com/image5"
+                },
+                new BoilerPart {
+                    Id = 6,
+                    Name = "Fan Controller",
+                    CategoryId = "PCB Assembly",
+                    Price = 28.35M,
+                    Overview = "Controller for air-con unit",
+                    NumberInStock = 7,
+                    ImageUrl = "http://contoso.com/image6"
                 }
             );
 

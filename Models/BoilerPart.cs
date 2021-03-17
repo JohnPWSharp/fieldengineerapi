@@ -20,6 +20,7 @@ namespace FieldEngineerApi.Models
         public decimal Price { get; set; }
         public string Overview { get; set; }
         public int NumberInStock { get; set; }
+        public string ImageUrl { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
     }
 }

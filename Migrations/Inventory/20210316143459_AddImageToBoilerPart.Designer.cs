@@ -4,14 +4,16 @@ using FieldEngineerApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FieldEngineerApi.Migrations.Inventory
 {
     [DbContext(typeof(InventoryContext))]
-    partial class InventoryContextModelSnapshot : ModelSnapshot
+    [Migration("20210316143459_AddImageToBoilerPart")]
+    partial class AddImageToBoilerPart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,7 +126,7 @@ namespace FieldEngineerApi.Migrations.Inventory
                     b.Property<bool>("Delivered")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("DeliveredDateTime")
+                    b.Property<DateTime>("DeliveredDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("OrderedDateTime")
@@ -148,7 +150,8 @@ namespace FieldEngineerApi.Migrations.Inventory
                             Id = 1L,
                             BoilerPartId = 1L,
                             Delivered = false,
-                            OrderedDateTime = new DateTime(2021, 3, 12, 14, 8, 22, 115, DateTimeKind.Local).AddTicks(5148),
+                            DeliveredDateTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            OrderedDateTime = new DateTime(2021, 3, 11, 14, 34, 59, 446, DateTimeKind.Local).AddTicks(5830),
                             TotalPrice = 243.0m,
                             quantity = 30L
                         },
@@ -157,8 +160,8 @@ namespace FieldEngineerApi.Migrations.Inventory
                             Id = 2L,
                             BoilerPartId = 3L,
                             Delivered = true,
-                            DeliveredDateTime = new DateTime(2021, 3, 13, 14, 8, 22, 118, DateTimeKind.Local).AddTicks(1383),
-                            OrderedDateTime = new DateTime(2021, 3, 10, 14, 8, 22, 118, DateTimeKind.Local).AddTicks(1359),
+                            DeliveredDateTime = new DateTime(2021, 3, 12, 14, 34, 59, 449, DateTimeKind.Local),
+                            OrderedDateTime = new DateTime(2021, 3, 9, 14, 34, 59, 448, DateTimeKind.Local).AddTicks(9977),
                             TotalPrice = 39.6m,
                             quantity = 20L
                         });
