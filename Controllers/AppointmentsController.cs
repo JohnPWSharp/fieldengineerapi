@@ -30,7 +30,10 @@ namespace FieldEngineerApi.Controllers
         [HttpGet("Next")]
         public async Task<ActionResult<Appointment>> GetNextAppointment()
         {
-            var nextAppointment = await _context.Appointments.OrderByDescending(s => s.StartDateTime).FirstOrDefaultAsync();
+            var nextAppointment = await _context.Appointments
+                .Where(s => s.StartDateTime > DateTime.Now)
+                .OrderBy(s => s.StartDateTime)
+                .FirstOrDefaultAsync();
 
             if (nextAppointment == null)
             {
