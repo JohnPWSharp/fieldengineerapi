@@ -63,11 +63,8 @@ You can set up these databases in Azure SQL Database by following these steps:
 
     ```bash
     dotnet tool install --global dotnet-ef
-    dotnet ef migrations add InitialMigration --context InventoryContext
     dotnet ef database update --context InventoryContext
-    dotnet ef migrations add InitialMigration --context ScheduleContext
     dotnet ef database update --context ScheduleContext
-    dotnet ef migrations add InitialMigration --context KnowledgeBaseContext
     dotnet ef database update --context KnowledgeBaseContext
     ```
 
