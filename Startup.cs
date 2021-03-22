@@ -22,9 +22,6 @@ namespace FieldEngineerApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //In memory Db Context registrations
-            //services.AddDbContext<InventoryContext>(opt => opt.UseInMemoryDatabase("InventoryDB"));
-            //services.AddDbContext<ScheduleContext>(opt => opt.UseInMemoryDatabase("SchedulesDB"));
             //SQL Server Db Context registrations.
             services.AddDbContext<InventoryContext>(options => options.UseSqlServer(Configuration.GetConnectionString("InventoryDb")));
             services.AddDbContext<ScheduleContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SchedulesDb")));
