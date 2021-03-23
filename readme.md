@@ -26,22 +26,21 @@ You can set up these databases in Azure SQL Database by following these steps:
 1. To clone the source code, enter this command:
 
     <!-- Update this URL, when we know the final repo location -->
-    ```bash
-    bash
+    ```powershell
     git clone https://github.com/alistairmatthews/fieldengineerapi.git
     cd fieldengineerapi
     ```
 
 1. To log into your Azure subscription run this command, and enter your credentials:
 
-    ```bash
+    ```powershell
     az login
     ```
 
 1. To create an Azure SQL Database server, run this command, and then enter a resource group name, SQL server name, and an Azure location, such as **westus**:
 
-    ```bash
-    bash databasesetup.sh
+    ```powershell
+    .\databasesetup.ps1
     ```
 
 1. Log into the Azure portal, and navigate to **All resources**. Select the SQL Server you created in the previous step.
@@ -53,7 +52,7 @@ You can set up these databases in Azure SQL Database by following these steps:
 
 1. In your local **PowerShell** instance, start Visual Studio Code:
 
-    ```bash
+    ```powershell
     code .
     ```
 
@@ -61,7 +60,7 @@ You can set up these databases in Azure SQL Database by following these steps:
 1. Open **appsettings.Development.json**. In each connection string, replace **fieldengineersqlserver** with the name of the SQL server you created above.
 1. To create the databases by using Entity Framework, run these commands:
 
-    ```bash
+    ```powershell
     dotnet tool install --global dotnet-ef
     dotnet ef migrations add InitialDeployment --context InventoryContext --output-dir Migrations/Inventory
     dotnet ef database update --context InventoryContext
@@ -92,25 +91,25 @@ To issue requests to the Web API, you can use the **curl** tool.
 
 To return a list of all parts that field engineers can use, use this command:
 
-```bash
+```powershell
 curl -x GET "http://<yourapi>.azurewebsites.net/api/boilerparts" -H "accept: text/plain"
 ```
 
 To return a list of all appointments for all engineers, use:
 
-```bash
+```powershell
 curl -x GET "http://<yourapi>.azurewebsites.net/api/appointments" -H "accept: text/plain"
 ```
 
 To return a list of all engineers, use:
 
-```bash
+```powershell
 curl -x GET "http://<yourapi>.azurewebsites.net/api/engineers" -H "accept: text/plain"
 ```
 
 To create a new appointment, use:
 
-```bash
+```powershell
 curl -X POST "https://<yourapi>.azurewebsites.net/api/Appointments" 
     -H "accept: text/plain" -H "Content-Type: application/json" 
     -d "{\"customerId\":1,\"problemDetails\":\"string\",\"engineerId\":1,\"startDateTime\":\"2021-03-22T14:23:45.434Z\"}
@@ -118,24 +117,24 @@ curl -X POST "https://<yourapi>.azurewebsites.net/api/Appointments"
 
 To see a list of all customers and obtain their IDs, use:
 
-```bash
+```powershell
 curl -x GET "http://<yourapi>.azurewebsites.net/api/customers" -H "accept: text/plain"
 ```
 
 To see a list of all the problems and solutions for a given customer, use:
 
-```bash
+```powershell
 curl -X GET "https://<yourapi>.azurewebsites.net/api/Customers/<customersid>/Notes" -H  "accept: text/plain"
 ```
 
 To see a list of all open orders, use:
 
-```bash
+```powershell
 curl -X GET "https://<yourapi>.azurewebsites.net/api/Orders/Open" -H  "accept: text/plain"
 ```
 
 To see the next appointment for a given engineer, use:
 
-```bash
+```powershell
 curl -X GET "https://<yourapi>.azurewebsites.net/api/ScheduleEngineer/<engineersid>/Next" -H  "accept: text/plain"
 ```

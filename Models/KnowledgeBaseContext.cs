@@ -39,23 +39,33 @@ namespace FieldEngineerApi.Models
             modelBuilder.Entity<KnowledgeBaseBoilerPart>().HasData(
                 new KnowledgeBaseBoilerPart {
                     Id = 1,
-                    Name = "Caserta Stone Beige",
-                    Overview = "Extreme Series 18 in. x 18 in. carpet tiles are a durable and beautiful carpet solution specially engineered for both indoor and outdoor residential installations."
+                    Name = "Pumped Water Controller",
+                    Overview = "Water pump controller for combination boiler"
                 },
                 new KnowledgeBaseBoilerPart {
                     Id = 2,
-                    Name = "Caserta Sky Grey",
-                    Overview = "Extreme Series 18 in. x 18 in. carpet tiles are a durable and beautiful carpet solution specially engineered for both indoor and outdoor residential installations."
+                    Name = "3.5 W/S Heater",
+                    Overview = "Small heat exchanger for domestic boiler"
                 },
-                new KnowledgeBaseBoilerPart {
+                new BoilerPart {
                     Id = 3, 
-                    Name = "Ageless Beauty Clay",
-                    Overview = "Add some fashion to your floors with the Shaw Ageless Beauty Carpet collection."
+                    Name = "Inlet Valve",
+                    Overview = "Water inlet valve with one-way operation"
                 },
-                new KnowledgeBaseBoilerPart {
+                new BoilerPart {
                     Id = 4,
-                    Name = "Lush II Tundra",
-                    Overview = "Made with 100% premium nylon fiber, this textured carpet creates a warm, casual atmosphere that invites you to relax and thoroughly enjoy your home."
+                    Name = "Mid-position Valve",
+                    Overview = "Bi-directional pressure release"
+                },
+                new BoilerPart {
+                    Id = 5,
+                    Name = "5.0 W/S Heater",
+                    Overview = "Medium heat exchanger for canteen boiler"
+                },
+                new BoilerPart {
+                    Id = 6,
+                    Name = "Fan Controller",
+                    Overview = "Controller for air-con unit"
                 }
             );
 
