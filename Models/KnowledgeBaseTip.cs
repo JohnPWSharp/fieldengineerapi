@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FieldEngineerApi.Models
@@ -7,7 +8,7 @@ namespace FieldEngineerApi.Models
         public long Id { get; set; }
         public long KnowledgeBaseBoilerPartId { get; set; }
         public virtual KnowledgeBaseBoilerPart KnowledgeBaseBoilerPart { get; set; }
-        public long KnowledgeBaseEngineerId { get; set; }
+        public Guid KnowledgeBaseEngineerGuid { get; set; }
         public virtual KnowledgeBaseEngineer KnowledgeBaseEngineer { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }

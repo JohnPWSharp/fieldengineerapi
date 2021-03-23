@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FieldEngineerApi.Models;
@@ -49,7 +47,6 @@ namespace FieldEngineerApi.Controllers
         }
 
         // PUT: api/KnowledgeBaseBoilerPart/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutKnowledgeBaseBoilerPart(long id, KnowledgeBaseBoilerPart knowledgeBaseBoilerPart)
         {
@@ -80,7 +77,6 @@ namespace FieldEngineerApi.Controllers
         }
 
         // POST: api/KnowledgeBaseBoilerPart
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<KnowledgeBaseBoilerPart>> PostKnowledgeBaseBoilerPart(KnowledgeBaseBoilerPart knowledgeBaseBoilerPart)
         {

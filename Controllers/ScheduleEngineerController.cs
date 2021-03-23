@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FieldEngineerApi.Models;
@@ -27,11 +26,11 @@ namespace FieldEngineerApi.Controllers
             return await _context.Engineers.ToListAsync();
         }
 
-        // GET: api/ScheduleEngineer/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ScheduleEngineer>> GetScheduleEngineer(long id)
+        // GET: api/ScheduleEngineer/ab9f4790-05f2-4cc3-9f01-8dfa7d848179
+        [HttpGet("{guid}")]
+        public async Task<ActionResult<ScheduleEngineer>> GetScheduleEngineer(Guid guid)
         {
-            var scheduleEngineer = await _context.Engineers.FindAsync(id);
+            var scheduleEngineer = await _context.Engineers.Where(e => e.guid == guid).FirstOrDefaultAsync();
 
             if (scheduleEngineer == null)
             {
@@ -41,22 +40,22 @@ namespace FieldEngineerApi.Controllers
             return scheduleEngineer;
         }
 
-        // GET: api/ScheduleEngineer/5/Appointments
-        [HttpGet("{id}/Appointments")]
-        public async Task<ActionResult<IEnumerable<Appointment>>> GetScheduleEngineerAppointments(long id)
+        // GET: api/ScheduleEngineer/ab9f4790-05f2-4cc3-9f01-8dfa7d848179/Appointments
+        [HttpGet("{guid}/Appointments")]
+        public async Task<ActionResult<IEnumerable<Appointment>>> GetScheduleEngineerAppointments(Guid guid)
         {
             return await _context.Appointments
-                .Where(a => a.EngineerId == id)
+                .Where(a => a.EngineerGuid == guid)
                 .OrderByDescending(a => a.StartDateTime)
                 .ToListAsync();
         }
 
-        // GET: api/ScheduleEngineer/5/Next
-        [HttpGet("{id}/Next")]
-        public async Task<ActionResult<Appointment>> GetNextAppointment (long id)
+        // GET: api/ScheduleEngineer/ab9f4790-05f2-4cc3-9f01-8dfa7d848179/Next
+        [HttpGet("{guid}/Next")]
+        public async Task<ActionResult<Appointment>> GetNextAppointment (Guid guid)
         {
             var nextAppointment = await _context.Appointments
-                .Where(a => a.EngineerId == id && a.StartDateTime > DateTime.Now)
+                .Where(a => a.EngineerGuid == guid && a.StartDateTime > DateTime.Now)
                 .OrderBy(a => a.StartDateTime)
                 .FirstOrDefaultAsync();
 
@@ -68,26 +67,25 @@ namespace FieldEngineerApi.Controllers
             return nextAppointment;
         }
 
-        // GET: api/ScheduleEngineer/5/Today
-        [HttpGet("{id}/Today")]
-        public async Task<ActionResult<IEnumerable<Appointment>>> GetTodaysAppointments(long id)
+        // GET: api/ScheduleEngineer/ab9f4790-05f2-4cc3-9f01-8dfa7d848179/Today
+        [HttpGet("{guid}/Today")]
+        public async Task<ActionResult<IEnumerable<Appointment>>> GetTodaysAppointments(Guid guid)
         {
             var startDateTime = DateTime.Today;
             var endDateTime = DateTime.Today.AddDays(1).AddTicks(-1);
 
             return await _context.Appointments
-                .Where(a => a.EngineerId == id  && a.StartDateTime >= startDateTime && a.StartDateTime <= endDateTime)
+                .Where(a => a.EngineerGuid == guid  && a.StartDateTime >= startDateTime && a.StartDateTime <= endDateTime)
                 .OrderBy(a => a.StartDateTime)
                 .ToListAsync();
         }
 
 
-        // PUT: api/ScheduleEngineer/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutScheduleEngineer(long id, ScheduleEngineer scheduleEngineer)
+        // PUT: api/ScheduleEngineer/ab9f4790-05f2-4cc3-9f01-8dfa7d848179
+        [HttpPut("{guid}")]
+        public async Task<IActionResult> PutScheduleEngineer(Guid guid, ScheduleEngineer scheduleEngineer)
         {
-            if (id != scheduleEngineer.Id)
+            if (guid != scheduleEngineer.guid)
             {
                 return BadRequest();
             }
@@ -100,7 +98,7 @@ namespace FieldEngineerApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ScheduleEngineerExists(id))
+                if (!ScheduleEngineerExists(guid))
                 {
                     return NotFound();
                 }
@@ -114,21 +112,20 @@ namespace FieldEngineerApi.Controllers
         }
 
         // POST: api/ScheduleEngineer
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<ScheduleEngineer>> PostScheduleEngineer(ScheduleEngineer scheduleEngineer)
         {
             _context.Engineers.Add(scheduleEngineer);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetScheduleEngineer", new { id = scheduleEngineer.Id }, scheduleEngineer);
+            return CreatedAtAction("GetScheduleEngineer", new { guid = scheduleEngineer.guid }, scheduleEngineer);
         }
 
         // DELETE: api/ScheduleEngineer/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteScheduleEngineer(long id)
+        [HttpDelete("{guid}")]
+        public async Task<IActionResult> DeleteScheduleEngineer(Guid guid)
         {
-            var scheduleEngineer = await _context.Engineers.FindAsync(id);
+            var scheduleEngineer = await _context.Engineers.FindAsync(guid);
             if (scheduleEngineer == null)
             {
                 return NotFound();
@@ -140,9 +137,9 @@ namespace FieldEngineerApi.Controllers
             return NoContent();
         }
 
-        private bool ScheduleEngineerExists(long id)
+        private bool ScheduleEngineerExists(Guid guid)
         {
-            return _context.Engineers.Any(e => e.Id == id);
+            return _context.Engineers.Any(e => e.guid == guid);
         }
     }
 }

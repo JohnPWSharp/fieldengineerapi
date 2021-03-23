@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,35 +25,6 @@ namespace FieldEngineerApi.Controllers
             return await _context.Appointments.ToListAsync();
         }
 
-        // GET: api/Appointments/Next
-        [HttpGet("Next")]
-        public async Task<ActionResult<Appointment>> GetNextAppointment()
-        {
-            var nextAppointment = await _context.Appointments
-                .Where(s => s.StartDateTime > DateTime.Now)
-                .OrderBy(s => s.StartDateTime)
-                .FirstOrDefaultAsync();
-
-            if (nextAppointment == null)
-            {
-                return NotFound();
-            }
-
-            return nextAppointment;
-        }
-
-        // GET: api/Appointments/Today
-        [HttpGet("Today")]
-        public async Task<ActionResult<IEnumerable<Appointment>>> GetTodaysAppointments()
-        {
-            var startDateTime = DateTime.Today;
-            var endDateTime = DateTime.Today.AddDays(1).AddTicks(-1);
-
-            return await _context.Appointments.OrderByDescending(s => s.StartDateTime)
-                .Where(s => s.StartDateTime >= startDateTime && s.StartDateTime <= endDateTime).ToListAsync();
-    
-        }
-
         // GET: api/Appointments/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Appointment>> GetAppointment(long id)
@@ -70,7 +40,6 @@ namespace FieldEngineerApi.Controllers
         }
 
         // PUT: api/Appointments/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAppointment(long id, Appointment appointment)
         {
@@ -101,7 +70,6 @@ namespace FieldEngineerApi.Controllers
         }
 
         // POST: api/Appointments
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Appointment>> PostAppointment(Appointment appointment)
         {

@@ -15,7 +15,7 @@ namespace FieldEngineerApi.Models
         [Required]
         public long AppointmentStatusId { get; set; }
         public virtual AppointmentStatus AppointmentStatus { get; set; }
-        public long EngineerId { get; set; }
+        public Guid EngineerGuid { get; set; }
         public virtual ScheduleEngineer Engineer { get ; set; }
         [Display(Name = "StartTime")]
         [DataType(DataType.DateTime)]

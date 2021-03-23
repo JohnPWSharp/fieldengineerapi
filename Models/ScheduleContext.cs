@@ -66,17 +66,17 @@ namespace FieldEngineerApi.Models
 
             modelBuilder.Entity<ScheduleEngineer>().HasData(
                 new ScheduleEngineer {
-                    Id = 1,
-                    Name = "Sara Perez",
+                    guid = new Guid("ab9f4790-05f2-4cc3-9f01-8dfa7d848179"),
+                    Name = "Michelle Harris",
                     ContactNumber = "554-1000"
                 },
                 new ScheduleEngineer {
-                    Id = 2,
-                    Name = "Michelle Harris",
+                    guid = new Guid("f97f7495-101d-45b3-ac62-45a15e4d56c5"),
+                    Name = "Sara Perez",
                     ContactNumber = "554-1001"
                 },
                 new ScheduleEngineer {
-                    Id = 3,
+                    guid = new Guid("cd3ed834-49fe-42c0-9b57-6627fe13c8ba"),
                     Name = "Quincy Watson",
                     ContactNumber = "554-1002"
                 }
@@ -88,7 +88,7 @@ namespace FieldEngineerApi.Models
                     CustomerId = 1,
                     ProblemDetails = "Boiler wont start",
                     AppointmentStatusId = 3, 
-                    EngineerId = 1, 
+                    EngineerGuid = new Guid("ab9f4790-05f2-4cc3-9f01-8dfa7d848179"), 
                     StartDateTime = DateTime.Now.AddDays(-10),
                     Notes = "Installed a new diverter valve"
                 },
@@ -97,7 +97,7 @@ namespace FieldEngineerApi.Models
                     CustomerId = 2,
                     ProblemDetails = "Can't change temperature",
                     AppointmentStatusId = 2,
-                    EngineerId = 2,
+                    EngineerGuid = new Guid("f97f7495-101d-45b3-ac62-45a15e4d56c5"),
                     StartDateTime = DateTime.Now.AddDays(-8),
                     Notes = "Needed a new heat exchanger"
                 },
@@ -106,7 +106,7 @@ namespace FieldEngineerApi.Models
                     CustomerId = 3,
                     ProblemDetails = "Radiators aren't working",
                     AppointmentStatusId = 2,
-                    EngineerId = 2,
+                    EngineerGuid = new Guid("f97f7495-101d-45b3-ac62-45a15e4d56c5"),
                     StartDateTime = DateTime.Now.AddDays(-7),
                     Notes = "Bled radiators."
                 },
@@ -115,7 +115,7 @@ namespace FieldEngineerApi.Models
                     CustomerId = 1,
                     ProblemDetails = "Boiler wont start",
                     AppointmentStatusId = 3, 
-                    EngineerId = 1, 
+                    EngineerGuid = new Guid("ab9f4790-05f2-4cc3-9f01-8dfa7d848179"), 
                     StartDateTime = DateTime.Now.AddDays(-5),
                     Notes = "Installed a second new diverter valve"
                 }
