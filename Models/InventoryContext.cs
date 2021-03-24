@@ -13,7 +13,9 @@ namespace FieldEngineerApi.Models
         }
 
         public DbSet<BoilerPart> BoilerParts { get; set; }
+        public DbSet<InventoryEngineer> Engineers { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -75,6 +77,24 @@ namespace FieldEngineerApi.Models
                 }
             );
 
+            modelBuilder.Entity<InventoryEngineer>().HasData(
+                new InventoryEngineer {
+                    guid = new Guid("ab9f4790-05f2-4cc3-9f01-8dfa7d848179"),
+                    Name = "Michelle Harris",
+                    ContactNumber = "554-1000"
+                },
+                new InventoryEngineer {
+                    guid = new Guid("f97f7495-101d-45b3-ac62-45a15e4d56c5"),
+                    Name = "Sara Perez",
+                    ContactNumber = "554-1001"
+                },
+                new InventoryEngineer {
+                    guid = new Guid("cd3ed834-49fe-42c0-9b57-6627fe13c8ba"),
+                    Name = "Quincy Watson",
+                    ContactNumber = "554-1002"
+                }
+            );
+
             modelBuilder.Entity<Order>().HasData(
                 new Order {
                     Id = 1,
@@ -92,6 +112,21 @@ namespace FieldEngineerApi.Models
                     OrderedDateTime = DateTime.Now.AddDays(-7),
                     Delivered = true,
                     DeliveredDateTime = DateTime.Now.AddDays(-4)
+                }
+            );
+
+            modelBuilder.Entity<Reservation>().HasData(
+                new Reservation {
+                    Id = 1,
+                    BoilerPartId = 1,
+                    NumberToReserve = 5,
+                    EngineerGuid = new Guid("ab9f4790-05f2-4cc3-9f01-8dfa7d848179")
+                },
+                new Reservation {
+                    Id = 2,
+                    BoilerPartId = 3,
+                    NumberToReserve = 3,
+                    EngineerGuid = new Guid("f97f7495-101d-45b3-ac62-45a15e4d56c5")
                 }
             );
         }

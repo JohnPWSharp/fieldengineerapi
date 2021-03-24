@@ -16,5 +16,6 @@ namespace FieldEngineerApi.Models
         public int NumberInStock { get; set; }
         public string ImageUrl { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Reservation> Reservations { get; set; }
     }
 }
