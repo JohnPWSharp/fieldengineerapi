@@ -50,7 +50,12 @@ namespace FieldEngineerApi.Controllers
         [HttpGet("{id}/Tips")]
         public async Task<ActionResult<IEnumerable<KnowledgeBaseTip>>> GetTipsForPart(long id)
         {
-            return await _context.Tips.Where(t => t.KnowledgeBaseBoilerPartId == id).ToListAsync();
+            return await _context
+                .Tips
+                .Where(t => t.KnowledgeBaseBoilerPartId == id)
+                .Include(t => t.KnowledgeBaseBoilerPart)
+                .Include(t => t.KnowledgeBaseEngineer)
+                .ToListAsync();
         }
 
         // PUT: api/KnowledgeBaseBoilerPart/5

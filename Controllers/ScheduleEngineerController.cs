@@ -53,6 +53,8 @@ namespace FieldEngineerApi.Controllers
         {
             return await _context.Appointments
                 .Where(a => a.EngineerGuid == guid)
+                .Include(a => a.Customer)
+                .Include(a => a.AppointmentStatus)
                 .OrderByDescending(a => a.StartDateTime)
                 .ToListAsync();
         }
@@ -63,6 +65,8 @@ namespace FieldEngineerApi.Controllers
         {
             var nextAppointment = await _context.Appointments
                 .Where(a => a.EngineerGuid == guid && a.StartDateTime > DateTime.Now)
+                .Include(a => a.Customer)
+                .Include(a => a.AppointmentStatus)
                 .OrderBy(a => a.StartDateTime)
                 .FirstOrDefaultAsync();
 
@@ -83,6 +87,8 @@ namespace FieldEngineerApi.Controllers
 
             return await _context.Appointments
                 .Where(a => a.EngineerGuid == guid  && a.StartDateTime >= startDateTime && a.StartDateTime <= endDateTime)
+                .Include(a => a.Customer)
+                .Include(a => a.AppointmentStatus)
                 .OrderBy(a => a.StartDateTime)
                 .ToListAsync();
         }

@@ -52,6 +52,8 @@ namespace FieldEngineerApi.Controllers
         {
             return await _context.Appointments
                 .Where(a => a.CustomerId == id)
+                .Include(a => a.Engineer)
+                .Include(a => a.AppointmentStatus)
                 .OrderByDescending(a => a.StartDateTime)
                 .ToListAsync();
         }
