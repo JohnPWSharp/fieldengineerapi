@@ -22,14 +22,21 @@ namespace FieldEngineerApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<KnowledgeBaseBoilerPart>>> GetBoilerParts()
         {
-            return await _context.BoilerParts.ToListAsync();
+            return await _context
+                .BoilerParts
+                .Include(b => b.KnowledgeBaseTips)
+                .ToListAsync();
         }
 
         // GET: api/KnowledgeBaseBoilerPart/5
         [HttpGet("{id}")]
         public async Task<ActionResult<KnowledgeBaseBoilerPart>> GetKnowledgeBaseBoilerPart(long id)
         {
-            var knowledgeBaseBoilerPart = await _context.BoilerParts.FindAsync(id);
+            var knowledgeBaseBoilerPart = await _context
+                .BoilerParts
+                .Where(b => b.Id == id)
+                .Include(b => b.KnowledgeBaseTips)
+                .FirstOrDefaultAsync();
 
             if (knowledgeBaseBoilerPart == null)
             {

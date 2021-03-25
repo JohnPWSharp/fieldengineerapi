@@ -9,8 +9,7 @@ namespace FieldEngineerApi.Models
         [Key]
         public long Id { get; set; }
         public long BoilerPartId { get; set; }
-        [JsonIgnore]
-        public virtual BoilerPart BoilerPart { get; set; }
+        public BoilerPart BoilerPart { get; set; }
         public long quantity { get; set; }
         [Column(TypeName = "money")]
         public decimal TotalPrice { get; set; }

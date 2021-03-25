@@ -23,14 +23,21 @@ namespace FieldEngineerApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<KnowledgeBaseEngineer>>> GetEngineers()
         {
-            return await _context.Engineers.ToListAsync();
+            return await _context
+                .Engineers
+                .Include(e => e.KnowledgeBaseTips)
+                .ToListAsync();
         }
 
         // GET: api/KnowledgeBaseEngineer/ab9f4790-05f2-4cc3-9f01-8dfa7d848179
         [HttpGet("{guid}")]
         public async Task<ActionResult<KnowledgeBaseEngineer>> GetKnowledgeBaseEngineer(Guid guid)
         {
-            var knowledgeBaseEngineer = await _context.Engineers.FindAsync(guid);
+            var knowledgeBaseEngineer = await _context
+                .Engineers
+                .Where(e => e.guid == guid)
+                .Include(e => e.KnowledgeBaseTips)
+                .FirstOrDefaultAsync();
 
             if (knowledgeBaseEngineer == null)
             {

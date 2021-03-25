@@ -12,7 +12,7 @@ namespace FieldEngineerApi.Models
         [Required]
         public string Name { get; set; }
         public string ContactNumber { get; set; }
-        public virtual ICollection<Reservation> Reservations { get; set; }
+        public List<Reservation> Reservations { get; set; }
     }
 
 }

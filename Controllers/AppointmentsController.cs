@@ -22,14 +22,25 @@ namespace FieldEngineerApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments()
         {
-            return await _context.Appointments.ToListAsync();
+            return await _context
+                .Appointments
+                .Include(a => a.AppointmentStatus)
+                .Include(a => a.Engineer)
+                .Include(a => a.Customer)
+                .ToListAsync();
         }
 
         // GET: api/Appointments/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Appointment>> GetAppointment(long id)
         {
-            var appointment = await _context.Appointments.FindAsync(id);
+            var appointment = await _context
+                .Appointments
+                .Where(a => a.Id == id)
+                .Include(a => a.AppointmentStatus)
+                .Include(a => a.Engineer)
+                .Include(a => a.Customer)
+                .FirstOrDefaultAsync();
 
             if (appointment == null)
             {

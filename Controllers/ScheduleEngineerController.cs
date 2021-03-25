@@ -23,14 +23,21 @@ namespace FieldEngineerApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ScheduleEngineer>>> GetEngineers()
         {
-            return await _context.Engineers.ToListAsync();
+            return await _context
+                .Engineers
+                .Include(e => e.Appointments)
+                .ToListAsync();
         }
 
         // GET: api/ScheduleEngineer/ab9f4790-05f2-4cc3-9f01-8dfa7d848179
         [HttpGet("{guid}")]
         public async Task<ActionResult<ScheduleEngineer>> GetScheduleEngineer(Guid guid)
         {
-            var scheduleEngineer = await _context.Engineers.Where(e => e.guid == guid).FirstOrDefaultAsync();
+            var scheduleEngineer = await _context
+                .Engineers
+                .Where(e => e.guid == guid)
+                .Include(e => e.Appointments)
+                .FirstOrDefaultAsync();
 
             if (scheduleEngineer == null)
             {

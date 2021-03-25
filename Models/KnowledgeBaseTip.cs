@@ -7,9 +7,9 @@ namespace FieldEngineerApi.Models
         [Key]
         public long Id { get; set; }
         public long KnowledgeBaseBoilerPartId { get; set; }
-        public virtual KnowledgeBaseBoilerPart KnowledgeBaseBoilerPart { get; set; }
+        public KnowledgeBaseBoilerPart KnowledgeBaseBoilerPart { get; set; }
         public Guid KnowledgeBaseEngineerGuid { get; set; }
-        public virtual KnowledgeBaseEngineer KnowledgeBaseEngineer { get; set; }
+        public KnowledgeBaseEngineer KnowledgeBaseEngineer { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
     }

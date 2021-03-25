@@ -22,14 +22,21 @@ namespace FieldEngineerApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
         {
-            return await _context.Customers.ToListAsync();
+            return await _context
+                .Customers
+                .Include(c => c.Appointments)
+                .ToListAsync();
         }
 
         // GET: api/Customers/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Customer>> GetCustomer(long id)
         {
-            var customer = await _context.Customers.FindAsync(id);
+            var customer = await _context
+                .Customers
+                .Where(c => c.Id == id)
+                .Include(c => c.Appointments)
+                .FirstOrDefaultAsync();
 
             if (customer == null)
             {

@@ -9,6 +9,6 @@ namespace FieldEngineerApi.Models
         public long Id { get; set; }
         public string Name { get; set; }
         public string Overview { get; set; }
-        public virtual ICollection<KnowledgeBaseTip> KnowledgeBaseTips { get; set; }
+        public List<KnowledgeBaseTip> KnowledgeBaseTips { get; set; }
     }
 }

@@ -1,6 +1,7 @@
-
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -32,6 +33,8 @@ namespace FieldEngineerApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FieldEngineerApi", Version = "v1" });
             });
+
+            services.AddMvc().AddJsonOptions( options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

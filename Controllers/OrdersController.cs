@@ -23,14 +23,21 @@ namespace FieldEngineerApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         {
-            return await _context.Orders.ToListAsync();
+            return await _context
+                .Orders
+                .Include(o => o.BoilerPart)
+                .ToListAsync();
         }
 
         // GET: api/Orders/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Order>> GetOrder(long id)
         {
-            var order = await _context.Orders.FindAsync(id);
+            var order = await _context
+                .Orders
+                .Where(o => o.Id == id)
+                .Include(o => o.BoilerPart)
+                .FirstOrDefaultAsync();
 
             if (order == null)
             {
@@ -47,6 +54,7 @@ namespace FieldEngineerApi.Controllers
             return await _context.Orders
                 .Where(o => o.Delivered == false)
                 .OrderByDescending(o => o.OrderedDateTime)
+                .Include(o => o.BoilerPart)
                 .ToListAsync();
         }
 
@@ -56,6 +64,7 @@ namespace FieldEngineerApi.Controllers
             return await _context.Orders
                 .Where(o => o.Delivered == true)
                 .OrderByDescending(o => o.DeliveredDateTime)
+                .Include(o => o.BoilerPart)
                 .ToListAsync();
         }
 

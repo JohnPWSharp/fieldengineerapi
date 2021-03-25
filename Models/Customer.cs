@@ -12,7 +12,7 @@ namespace FieldEngineerApi.Models
         public string Name { get; set; }
         public string Address { get; set; }
         public string ContactNumber { get; set; }
-        public virtual ICollection<Appointment> Appointments { get; set; }
+        public List<Appointment> Appointments { get; set; }
     }
 
 }

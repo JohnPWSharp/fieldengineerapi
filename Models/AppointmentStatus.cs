@@ -8,7 +8,7 @@ namespace FieldEngineerApi.Models
         public long Id { get; set; }
         public string StatusName { get; set; }
 
-        public virtual ICollection<Appointment> Appointments { get; set; }
+        public List<Appointment> Appointments { get; set; }
     }
 
 }
