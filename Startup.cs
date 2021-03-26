@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,13 +27,23 @@ namespace FieldEngineerApi
             services.AddDbContext<ScheduleContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SchedulesDb")));
             services.AddDbContext<KnowledgeBaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("KnowledgeDb")));
             
+            services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FieldEngineerApi", Version = "v1" });
             });
 
-            services.AddMvc().AddJsonOptions( options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+            /*services.AddMvc()
+                .AddNewtonsoftJson(
+                    options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                ); */
+            //     .AddJsonOptions(
+            //         options => options.JsonSerializerOptions.ReferenceHandler = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            // );
+ 
+    
+            //services.AddMvc().AddJsonOptions( options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
