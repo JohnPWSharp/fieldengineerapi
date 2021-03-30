@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FieldEngineerApi.Models;
@@ -23,21 +24,14 @@ namespace FieldEngineerApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<KnowledgeBaseEngineer>>> GetEngineers()
         {
-            return await _context
-                .Engineers
-                .Include(e => e.KnowledgeBaseTips)
-                .ToListAsync();
+            return await _context.Engineers.ToListAsync();
         }
 
-        // GET: api/KnowledgeBaseEngineer/ab9f4790-05f2-4cc3-9f01-8dfa7d848179
-        [HttpGet("{guid}")]
-        public async Task<ActionResult<KnowledgeBaseEngineer>> GetKnowledgeBaseEngineer(Guid guid)
+        // GET: api/KnowledgeBaseEngineer/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<KnowledgeBaseEngineer>> GetKnowledgeBaseEngineer(string id)
         {
-            var knowledgeBaseEngineer = await _context
-                .Engineers
-                .Where(e => e.guid == guid)
-                .Include(e => e.KnowledgeBaseTips)
-                .FirstOrDefaultAsync();
+            var knowledgeBaseEngineer = await _context.Engineers.FindAsync(id);
 
             if (knowledgeBaseEngineer == null)
             {
@@ -47,18 +41,20 @@ namespace FieldEngineerApi.Controllers
             return knowledgeBaseEngineer;
         }
 
-        // GET: api/KnowledgeBaseEngineer/ab9f4790-05f2-4cc3-9f01-8dfa7d848179/Tips
-        [HttpGet("{guid}/Tips")]
-        public async Task<ActionResult<IEnumerable<KnowledgeBaseTip>>> GetTipsForEngineer(Guid guid)
-        {
-            return await _context.Tips.Where(t => t.KnowledgeBaseEngineerGuid == guid).ToListAsync();
+        // GET: api/KnowledgeBaseEngineer/5/Tips 
+        [HttpGet("{id}/Tips")] 
+        public async Task<ActionResult<IEnumerable<KnowledgeBaseTip>>> GetTipsForEngineer(string id) 
+        { 
+            return await _context.Tips.Where( 
+                t => t.KnowledgeBaseEngineerId == id).ToListAsync(); 
         }
 
-        // PUT: api/KnowledgeBaseEngineer/ab9f4790-05f2-4cc3-9f01-8dfa7d848179
-        [HttpPut("{guid}")]
-        public async Task<IActionResult> PutKnowledgeBaseEngineer(Guid guid, KnowledgeBaseEngineer knowledgeBaseEngineer)
+        // PUT: api/KnowledgeBaseEngineer/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutKnowledgeBaseEngineer(string id, KnowledgeBaseEngineer knowledgeBaseEngineer)
         {
-            if (guid != knowledgeBaseEngineer.guid)
+            if (id != knowledgeBaseEngineer.Id)
             {
                 return BadRequest();
             }
@@ -71,7 +67,7 @@ namespace FieldEngineerApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!KnowledgeBaseEngineerExists(guid))
+                if (!KnowledgeBaseEngineerExists(id))
                 {
                     return NotFound();
                 }
@@ -85,20 +81,21 @@ namespace FieldEngineerApi.Controllers
         }
 
         // POST: api/KnowledgeBaseEngineer
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<KnowledgeBaseEngineer>> PostKnowledgeBaseEngineer(KnowledgeBaseEngineer knowledgeBaseEngineer)
         {
             _context.Engineers.Add(knowledgeBaseEngineer);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetKnowledgeBaseEngineer", new { guid = knowledgeBaseEngineer.guid }, knowledgeBaseEngineer);
+            return CreatedAtAction("GetKnowledgeBaseEngineer", new { Id = knowledgeBaseEngineer.Id }, knowledgeBaseEngineer);
         }
 
-        // DELETE: api/KnowledgeBaseEngineer/ab9f4790-05f2-4cc3-9f01-8dfa7d848179
-        [HttpDelete("{guid}")]
-        public async Task<IActionResult> DeleteKnowledgeBaseEngineer(Guid guid)
+        // DELETE: api/KnowledgeBaseEngineer/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteKnowledgeBaseEngineer(string id)
         {
-            var knowledgeBaseEngineer = await _context.Engineers.FindAsync(guid);
+            var knowledgeBaseEngineer = await _context.Engineers.FindAsync(id);
             if (knowledgeBaseEngineer == null)
             {
                 return NotFound();
@@ -110,9 +107,9 @@ namespace FieldEngineerApi.Controllers
             return NoContent();
         }
 
-        private bool KnowledgeBaseEngineerExists(Guid guid)
+        private bool KnowledgeBaseEngineerExists(string id)
         {
-            return _context.Engineers.Any(e => e.guid == guid);
+            return _context.Engineers.Any(e => e.Id == id);
         }
     }
 }

@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FieldEngineerApi.Models;
@@ -9,34 +11,27 @@ namespace FieldEngineerApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomersController : ControllerBase
+    public class CustomerController : ControllerBase
     {
         private readonly ScheduleContext _context;
 
-        public CustomersController(ScheduleContext context)
+        public CustomerController(ScheduleContext context)
         {
             _context = context;
         }
 
-        // GET: api/Customers
+        // GET: api/Customer
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
         {
-            return await _context
-                .Customers
-                .Include(c => c.Appointments)
-                .ToListAsync();
+            return await _context.Customers.ToListAsync();
         }
 
-        // GET: api/Customers/5
+        // GET: api/Customer/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Customer>> GetCustomer(long id)
         {
-            var customer = await _context
-                .Customers
-                .Where(c => c.Id == id)
-                .Include(c => c.Appointments)
-                .FirstOrDefaultAsync();
+            var customer = await _context.Customers.FindAsync(id);
 
             if (customer == null)
             {
@@ -46,30 +41,29 @@ namespace FieldEngineerApi.Controllers
             return customer;
         }
 
-        //GET: api/Customers/5/Appointments
-        [HttpGet("{id}/Appointments")]
-        public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments(long id)
-        {
-            return await _context.Appointments
-                .Where(a => a.CustomerId == id)
-                .Include(a => a.Engineer)
-                .Include(a => a.AppointmentStatus)
-                .OrderByDescending(a => a.StartDateTime)
-                .ToListAsync();
-        }
+        //GET: api/Customers/5/Appointments 
+        [HttpGet("{id}/Appointments")] 
+        public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments(long id) 
+        { 
+            return await _context.Appointments 
+                .Where(a => a.CustomerId == id) 
+                .OrderByDescending(a => a.StartDateTime) 
+                .ToListAsync(); 
+        } 
 
-        //GET: api/Customers/5/Notes
-        [HttpGet("{id}/Notes")]
-        public async Task<ActionResult<IEnumerable<object>>> GetNotes(long id)
-        {
-            return await _context.Appointments
-                .Where(a => a.CustomerId == id)
-                .OrderByDescending(a => a.StartDateTime)
-                .Select(a => new {a.StartDateTime, a.ProblemDetails, a.Notes})
-                .ToListAsync();
-        }
+        //GET: api/Customers/5/Notes 
+        [HttpGet("{id}/Notes")] 
+        public async Task<ActionResult<IEnumerable<object>>> GetNotes(long id) 
+        { 
+            return await _context.Appointments 
+                .Where(a => a.CustomerId == id) 
+                .OrderByDescending(a => a.StartDateTime) 
+                .Select(a =>  new {a.StartDateTime, a.ProblemDetails, a.Notes}) 
+                .ToListAsync(); 
+        } 
 
-        // PUT: api/Customers/5
+        // PUT: api/Customer/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCustomer(long id, Customer customer)
         {
@@ -99,7 +93,8 @@ namespace FieldEngineerApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Customers
+        // POST: api/Customer
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
         {
@@ -109,7 +104,7 @@ namespace FieldEngineerApi.Controllers
             return CreatedAtAction("GetCustomer", new { id = customer.Id }, customer);
         }
 
-        // DELETE: api/Customers/5
+        // DELETE: api/Customer/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(long id)
         {

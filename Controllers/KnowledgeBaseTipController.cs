@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FieldEngineerApi.Models;
@@ -22,23 +24,14 @@ namespace FieldEngineerApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<KnowledgeBaseTip>>> GetTips()
         {
-            return await _context
-                .Tips
-                .Include(t => t.KnowledgeBaseBoilerPart)
-                .Include(t => t.KnowledgeBaseEngineer)
-                .ToListAsync();
+            return await _context.Tips.ToListAsync();
         }
 
         // GET: api/KnowledgeBaseTip/5
         [HttpGet("{id}")]
         public async Task<ActionResult<KnowledgeBaseTip>> GetKnowledgeBaseTip(long id)
         {
-            var knowledgeBaseTip = await _context
-                .Tips
-                .Where(t => t.Id == id)
-                .Include(t => t.KnowledgeBaseBoilerPart)
-                .Include(t => t.KnowledgeBaseEngineer)
-                .FirstOrDefaultAsync();
+            var knowledgeBaseTip = await _context.Tips.FindAsync(id);
 
             if (knowledgeBaseTip == null)
             {
@@ -49,6 +42,7 @@ namespace FieldEngineerApi.Controllers
         }
 
         // PUT: api/KnowledgeBaseTip/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutKnowledgeBaseTip(long id, KnowledgeBaseTip knowledgeBaseTip)
         {
@@ -79,6 +73,7 @@ namespace FieldEngineerApi.Controllers
         }
 
         // POST: api/KnowledgeBaseTip
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<KnowledgeBaseTip>> PostKnowledgeBaseTip(KnowledgeBaseTip knowledgeBaseTip)
         {

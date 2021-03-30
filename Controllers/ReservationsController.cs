@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FieldEngineerApi.Models;
@@ -9,16 +11,16 @@ namespace FieldEngineerApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ReservationController : ControllerBase
+    public class ReservationsController : ControllerBase
     {
         private readonly InventoryContext _context;
 
-        public ReservationController(InventoryContext context)
+        public ReservationsController(InventoryContext context)
         {
             _context = context;
         }
 
-        // GET: api/Reservation
+        // GET: api/Reservations
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reservation>>> GetReservations()
         {
@@ -29,7 +31,7 @@ namespace FieldEngineerApi.Controllers
                 .ToListAsync();
         }
 
-        // GET: api/Reservation/5
+        // GET: api/Reservations/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Reservation>> GetReservation(long id)
         {
@@ -48,7 +50,7 @@ namespace FieldEngineerApi.Controllers
             return reservation;
         }
 
-        // PUT: api/Reservation/5
+        // PUT: api/Reservations/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutReservation(long id, Reservation reservation)
@@ -79,7 +81,7 @@ namespace FieldEngineerApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Reservation
+        // POST: api/Reservations
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Reservation>> PostReservation(Reservation reservation)
@@ -90,7 +92,7 @@ namespace FieldEngineerApi.Controllers
             return CreatedAtAction("GetReservation", new { id = reservation.Id }, reservation);
         }
 
-        // DELETE: api/Reservation/5
+        // DELETE: api/Reservations/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReservation(long id)
         {

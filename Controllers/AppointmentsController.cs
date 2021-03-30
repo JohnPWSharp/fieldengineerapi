@@ -1,13 +1,15 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FieldEngineerApi.Models;
 
 namespace FieldEngineerApi.Controllers
 {
-    [Route("api/Appointments")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AppointmentsController : ControllerBase
     {
@@ -22,11 +24,10 @@ namespace FieldEngineerApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments()
         {
-            return await _context
-                .Appointments
-                .Include(a => a.AppointmentStatus)
-                .Include(a => a.Engineer)
-                .Include(a => a.Customer)
+            return await _context.Appointments
+                .Include(c => c.Customer)
+                .Include(e => e.Engineer)
+                .Include(s => s.AppointmentStatus)
                 .ToListAsync();
         }
 
@@ -34,23 +35,25 @@ namespace FieldEngineerApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Appointment>> GetAppointment(long id)
         {
-            var appointment = await _context
+            var appointment =_context
                 .Appointments
                 .Where(a => a.Id == id)
-                .Include(a => a.AppointmentStatus)
-                .Include(a => a.Engineer)
-                .Include(a => a.Customer)
-                .FirstOrDefaultAsync();
-
-            if (appointment == null)
+                .Include(c => c.Customer)
+                .Include(e => e.Engineer)
+                .Include(s => s.AppointmentStatus);
+                
+            var appData = await appointment.FirstOrDefaultAsync();                
+                
+            if (appData == null)
             {
                 return NotFound();
             }
 
-            return appointment;
+            return appData;
         }
 
         // PUT: api/Appointments/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAppointment(long id, Appointment appointment)
         {
@@ -81,12 +84,10 @@ namespace FieldEngineerApi.Controllers
         }
 
         // POST: api/Appointments
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Appointment>> PostAppointment(Appointment appointment)
         {
-            // Set the status to unresolved
-            appointment.AppointmentStatusId = 1;
-
             _context.Appointments.Add(appointment);
             await _context.SaveChangesAsync();
 

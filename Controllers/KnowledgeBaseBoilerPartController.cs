@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FieldEngineerApi.Models;
@@ -22,21 +24,14 @@ namespace FieldEngineerApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<KnowledgeBaseBoilerPart>>> GetBoilerParts()
         {
-            return await _context
-                .BoilerParts
-                .Include(b => b.KnowledgeBaseTips)
-                .ToListAsync();
+            return await _context.BoilerParts.ToListAsync();
         }
 
         // GET: api/KnowledgeBaseBoilerPart/5
         [HttpGet("{id}")]
         public async Task<ActionResult<KnowledgeBaseBoilerPart>> GetKnowledgeBaseBoilerPart(long id)
         {
-            var knowledgeBaseBoilerPart = await _context
-                .BoilerParts
-                .Where(b => b.Id == id)
-                .Include(b => b.KnowledgeBaseTips)
-                .FirstOrDefaultAsync();
+            var knowledgeBaseBoilerPart = await _context.BoilerParts.FindAsync(id);
 
             if (knowledgeBaseBoilerPart == null)
             {
@@ -46,19 +41,16 @@ namespace FieldEngineerApi.Controllers
             return knowledgeBaseBoilerPart;
         }
 
-        // GET: api/KnowledgeBaseBoilerPart/5/Tips
-        [HttpGet("{id}/Tips")]
-        public async Task<ActionResult<IEnumerable<KnowledgeBaseTip>>> GetTipsForPart(long id)
-        {
-            return await _context
-                .Tips
-                .Where(t => t.KnowledgeBaseBoilerPartId == id)
-                .Include(t => t.KnowledgeBaseBoilerPart)
-                .Include(t => t.KnowledgeBaseEngineer)
-                .ToListAsync();
+        // GET: api/KnowledgeBaseBoilerPart/5/Tips 
+        [HttpGet("{id}/Tips")] 
+        public async Task<ActionResult<IEnumerable<KnowledgeBaseTip>>> GetTipsForPart(long id) 
+        { 
+            return await _context.Tips.Where( 
+                t => t.KnowledgeBaseBoilerPartId == id).ToListAsync(); 
         }
 
         // PUT: api/KnowledgeBaseBoilerPart/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutKnowledgeBaseBoilerPart(long id, KnowledgeBaseBoilerPart knowledgeBaseBoilerPart)
         {
@@ -89,6 +81,7 @@ namespace FieldEngineerApi.Controllers
         }
 
         // POST: api/KnowledgeBaseBoilerPart
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<KnowledgeBaseBoilerPart>> PostKnowledgeBaseBoilerPart(KnowledgeBaseBoilerPart knowledgeBaseBoilerPart)
         {

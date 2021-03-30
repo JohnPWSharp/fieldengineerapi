@@ -1,13 +1,15 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FieldEngineerApi.Models;
 
 namespace FieldEngineerApi.Controllers
 {
-    [Route("api/BoilerParts")]
+    [Route("api/[controller]")]
     [ApiController]
     public class BoilerPartsController : ControllerBase
     {
@@ -22,23 +24,14 @@ namespace FieldEngineerApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BoilerPart>>> GetBoilerParts()
         {
-            return await _context
-                .BoilerParts
-                .Include(b => b.Orders)
-                .Include(b => b.Reservations)
-                .ToListAsync();
+            return await _context.BoilerParts.ToListAsync();
         }
 
         // GET: api/BoilerParts/5
         [HttpGet("{id}")]
         public async Task<ActionResult<BoilerPart>> GetBoilerPart(long id)
         {
-            var boilerPart = await _context
-                .BoilerParts
-                .Where(b => b.Id == id)
-                .Include(b => b.Orders)
-                .Include(b => b.Reservations)
-                .FirstOrDefaultAsync();
+            var boilerPart = await _context.BoilerParts.FindAsync(id);
 
             if (boilerPart == null)
             {
@@ -49,6 +42,7 @@ namespace FieldEngineerApi.Controllers
         }
 
         // PUT: api/BoilerParts/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBoilerPart(long id, BoilerPart boilerPart)
         {
@@ -79,6 +73,7 @@ namespace FieldEngineerApi.Controllers
         }
 
         // POST: api/BoilerParts
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<BoilerPart>> PostBoilerPart(BoilerPart boilerPart)
         {

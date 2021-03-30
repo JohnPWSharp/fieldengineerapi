@@ -1,18 +1,17 @@
 using System;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore; 
 
-namespace FieldEngineerApi.Models
-{
+namespace FieldEngineerApi.Models 
+{ 
+    public class InventoryContext : DbContext 
+    { 
+        public InventoryContext(DbContextOptions<InventoryContext> options) 
+            : base(options) 
+        { 
 
-    public class InventoryContext : DbContext
-    {
-        public InventoryContext(DbContextOptions<InventoryContext> options)
-            : base(options)
-        {
+        } 
 
-        }
-
-        public DbSet<BoilerPart> BoilerParts { get; set; }
+        public DbSet<BoilerPart> BoilerParts { get; set; } 
         public DbSet<InventoryEngineer> Engineers { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
@@ -79,17 +78,17 @@ namespace FieldEngineerApi.Models
 
             modelBuilder.Entity<InventoryEngineer>().HasData(
                 new InventoryEngineer {
-                    guid = new Guid("ab9f4790-05f2-4cc3-9f01-8dfa7d848179"),
+                    Id = "ab9f4790-05f2-4cc3-9f01-8dfa7d848179",
                     Name = "Michelle Harris",
                     ContactNumber = "554-1000"
                 },
                 new InventoryEngineer {
-                    guid = new Guid("f97f7495-101d-45b3-ac62-45a15e4d56c5"),
+                    Id = "f97f7495-101d-45b3-ac62-45a15e4d56c5",
                     Name = "Sara Perez",
                     ContactNumber = "554-1001"
                 },
                 new InventoryEngineer {
-                    guid = new Guid("cd3ed834-49fe-42c0-9b57-6627fe13c8ba"),
+                    Id = "cd3ed834-49fe-42c0-9b57-6627fe13c8ba",
                     Name = "Quincy Watson",
                     ContactNumber = "554-1002"
                 }
@@ -120,16 +119,16 @@ namespace FieldEngineerApi.Models
                     Id = 1,
                     BoilerPartId = 1,
                     NumberToReserve = 5,
-                    EngineerGuid = new Guid("ab9f4790-05f2-4cc3-9f01-8dfa7d848179")
+                    EngineerId = "ab9f4790-05f2-4cc3-9f01-8dfa7d848179"
                 },
                 new Reservation {
                     Id = 2,
                     BoilerPartId = 3,
                     NumberToReserve = 3,
-                    EngineerGuid = new Guid("f97f7495-101d-45b3-ac62-45a15e4d56c5")
+                    EngineerId = "f97f7495-101d-45b3-ac62-45a15e4d56c5"
                 }
             );
         }
-    }
-
+ 
+    } 
 }
