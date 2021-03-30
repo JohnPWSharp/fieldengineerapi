@@ -55,13 +55,20 @@ namespace FieldEngineerApi.Controllers
         // PUT: api/Appointments/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAppointment(long id, Appointment appointment)
+        public async Task<IActionResult> PutAppointment(long id, string problemDetails, string statusName, string notes, string imageUrl)
         {
-            if (id != appointment.Id)
+            var statusId = _context.AppointmentStatuses.First(s => s.StatusName == statusName).Id;
+            var appointment =  _context.Appointments.First(e => e.Id == id);
+
+            if (appointment == null)
             {
                 return BadRequest();
             }
 
+            appointment.ProblemDetails = problemDetails;
+            appointment.AppointmentStatusId = statusId;
+            appointment.Notes = notes;
+            appointment.ImageUrl = imageUrl;
             _context.Entry(appointment).State = EntityState.Modified;
 
             try
