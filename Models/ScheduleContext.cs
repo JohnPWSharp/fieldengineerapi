@@ -117,6 +117,42 @@ namespace FieldEngineerApi.Models
                     EngineerId = "ab9f4790-05f2-4cc3-9f01-8dfa7d848179", 
                     StartDateTime = DateTime.Now.AddDays(-5),
                     Notes = "Installed a second new diverter valve"
+                },
+                new Appointment {
+                    Id = 5,
+                    CustomerId = 2,
+                    ProblemDetails = "Water is not hot enough",
+                    AppointmentStatusId = 1, 
+                    EngineerId = "cd3ed834-49fe-42c0-9b57-6627fe13c8ba", 
+                    StartDateTime = DateTime.Now.AddDays(10),
+                    Notes = ""
+                },
+                new Appointment {
+                    Id = 6,
+                    CustomerId = 2,
+                    ProblemDetails = "Furnace is making a strange noise",
+                    AppointmentStatusId = 1, 
+                    EngineerId = "cd3ed834-49fe-42c0-9b57-6627fe13c8ba", 
+                    StartDateTime = DateTime.Now,
+                    Notes = "It bangs when it ignites"
+                },
+                new Appointment {
+                    Id = 7,
+                    CustomerId = 6,
+                    ProblemDetails = "Boiler needs its annual service",
+                    AppointmentStatusId = 1, 
+                    EngineerId = "f97f7495-101d-45b3-ac62-45a15e4d56c5", 
+                    StartDateTime = DateTime.Now.AddDays(4),
+                    Notes = "No particular problems"
+                },
+                new Appointment {
+                    Id = 8,
+                    CustomerId = 4,
+                    ProblemDetails = "Control panel has been broken",
+                    AppointmentStatusId = 1, 
+                    EngineerId = "f97f7495-101d-45b3-ac62-45a15e4d56c5", 
+                    StartDateTime = DateTime.Now.AddDays(5),
+                    Notes = "Must be replaced"
                 }
             );
         }

@@ -41,6 +41,25 @@ namespace FieldEngineerApi.Controllers
             return boilerPart;
         }
 
+        // GET: api/BoilerParts/5/Reserved
+        [HttpGet("{id}/Reserved")]
+        public async Task<ActionResult<object>> GetTotalReservations(long id)
+        {
+            var reservations = await _context
+                .Reservations
+                .Where(r => r.BoilerPartId == id)
+                .ToListAsync();
+
+            int totalReservations = 0;
+
+            foreach(Reservation reservation in reservations)
+            {
+                totalReservations += reservation.NumberToReserve;
+            }
+
+            return new {id, totalReservations};
+        }
+
         // PUT: api/BoilerParts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
