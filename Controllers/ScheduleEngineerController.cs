@@ -51,39 +51,6 @@ namespace FieldEngineerApi.Controllers
                 .ToListAsync(); 
         } 
 
-        // GET: api/ScheduleEngineer/5/Next 
-        [HttpGet("{id}/Next")] 
-        public async Task<ActionResult<Appointment>> GetNextAppointment (string id) 
-        { 
-            var nextAppointment = await _context.Appointments 
-                .Where(a => a.EngineerId == id && a.StartDateTime > DateTime.Now) 
-                .OrderBy(a => a.StartDateTime) 
-                .FirstOrDefaultAsync(); 
-    
-            if (nextAppointment == null) 
-            { 
-                return NotFound(); 
-            } 
-
-            return nextAppointment; 
-
-        }
-
-        // GET: api/ScheduleEngineer/5/Today 
-        [HttpGet("{id}/Today")] 
-        public async Task<ActionResult<IEnumerable<Appointment>>> GetTodaysAppointments(string id) 
-        { 
-            var startDateTime = DateTime.Today; 
-            var endDateTime = DateTime.Today.AddDays(1).AddTicks(-1); 
-
-            return await _context.Appointments 
-                .Where(a => a.EngineerId == id  &&  
-                    a.StartDateTime >= startDateTime && 
-                    a.StartDateTime <= endDateTime) 
-            .OrderBy(a => a.StartDateTime) 
-            .ToListAsync(); 
-        }
-
         // PUT: api/ScheduleEngineer/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

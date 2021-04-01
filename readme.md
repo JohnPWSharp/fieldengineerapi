@@ -1,6 +1,8 @@
 # Field Engineer Web API
 
-This repo stores the code for a simple Web API that presents information helpful to heating engineers working in the field to maintain and fix furnaces in domestic settings. This API supports the document **The fusion development approach to building power apps**. In the document, the development of a Power App, which integrates with this Web API, is described. 
+This repo stores the code for a simple Web API that presents information helpful to heating engineers working in the field to maintain and fix furnaces in domestic settings. This API supports the document **The fusion development approach to building power apps**. In the document, the development of a Power App, which integrates with this Web API, is described.
+
+This repo also includes the JSON definition for the Logic App created in the document.
 
 ## Prerequisites
 
@@ -25,7 +27,7 @@ You can set up these databases in Azure SQL Database by following these steps:
 1. Start PowerShell and navigate to a directory where you want to keep the source code.
 1. To clone the source code, enter this command:
 
-    <!-- Update this URL, when we know the final repo location -->
+    <!-- TODO: Update this URL, when we know the final repo location -->
     ```powershell
     git clone https://github.com/alistairmatthews/fieldengineerapi.git
     cd fieldengineerapi
@@ -43,6 +45,8 @@ You can set up these databases in Azure SQL Database by following these steps:
     .\databasesetup.ps1
     ```
 
+<!-- TODO: execute the SQL scripts here. -->
+
 1. Log into the Azure portal, and navigate to **All resources**. Select the SQL Server you created in the previous step.
 1. Under **Security** select, **Firewalls and virtual networks**.
 1. Select **Add client IP**.
@@ -58,6 +62,9 @@ You can set up these databases in Azure SQL Database by following these steps:
 
 1. Open **appsettings.json**. There are three connections strings in the file. In each connection string, replace **fieldengineersqlserver** with the name of the SQL server you created above.
 1. Open **appsettings.Development.json**. In each connection string, replace **fieldengineersqlserver** with the name of the SQL server you created above.
+
+<!-- TODO: Remove these calls when the SQL Scripts are complete -->
+
 1. To create the databases by using Entity Framework, run these commands:
 
     ```powershell
@@ -104,7 +111,7 @@ curl -x GET "http://<yourapi>.azurewebsites.net/api/appointments" -H "accept: te
 To return a list of all engineers, use:
 
 ```powershell
-curl -x GET "http://<yourapi>.azurewebsites.net/api/engineers" -H "accept: text/plain"
+curl -x GET "http://<yourapi>.azurewebsites.net/api/scehduleengineer" -H "accept: text/plain"
 ```
 
 To create a new appointment, use:
@@ -112,7 +119,7 @@ To create a new appointment, use:
 ```powershell
 curl -X POST "https://<yourapi>.azurewebsites.net/api/Appointments" 
     -H "accept: text/plain" -H "Content-Type: application/json" 
-    -d "{\"customerId\":1,\"problemDetails\":\"string\",\"engineerId\":1,\"startDateTime\":\"2021-03-22T14:23:45.434Z\"}
+    -d "{\"customerId\":1,\"problemDetails\":\"string\",\"engineerId\": <Guid>,\"startDateTime\":\"2021-03-22T14:23:45.434Z\"}
 ```
 
 To see a list of all customers and obtain their IDs, use:
@@ -131,10 +138,4 @@ To see a list of all open orders, use:
 
 ```powershell
 curl -X GET "https://<yourapi>.azurewebsites.net/api/Orders/Open" -H  "accept: text/plain"
-```
-
-To see the next appointment for a given engineer, use:
-
-```powershell
-curl -X GET "https://<yourapi>.azurewebsites.net/api/ScheduleEngineer/<engineersid>/Next" -H  "accept: text/plain"
 ```
