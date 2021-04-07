@@ -24,22 +24,14 @@ namespace FieldEngineerApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         {
-            return await _context
-                .Orders
-                .Include(o => o.BoilerPart)
-                .ToListAsync();
-            
+            return await _context.Orders.ToListAsync();
         }
 
         // GET: api/Orders/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Order>> GetOrder(long id)
         {
-            var order = await _context
-                .Orders
-                .Where(o => o.Id == id)
-                .Include(o => o.BoilerPart)
-                .FirstOrDefaultAsync();
+            var order = await _context.Orders.FindAsync(id);
 
             if (order == null)
             {
@@ -48,28 +40,6 @@ namespace FieldEngineerApi.Controllers
 
             return order;
         }
-
-        // GET: api/Orders/Open
-        [HttpGet("Open")]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOpenOrders()
-        {
-            return await _context.Orders
-                .Where(o => o.Delivered == false)
-                .OrderByDescending(o => o.OrderedDateTime)
-                .Include(o => o.BoilerPart)
-                .ToListAsync();
-        }
-
-        [HttpGet("Delivered")]
-        public async Task<ActionResult<IEnumerable<Order>>> GetDeliveredOrders()
-        {
-            return await _context.Orders
-                .Where(o => o.Delivered == true)
-                .OrderByDescending(o => o.DeliveredDateTime)
-                .Include(o => o.BoilerPart)
-                .ToListAsync();
-        }
-
 
         // PUT: api/Orders/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -105,16 +75,15 @@ namespace FieldEngineerApi.Controllers
         // POST: api/Orders
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        public async Task<ActionResult<Order>> PostOrder(long boilerPartId, int quantity)
         {
-            // Get the Boiler Part to check the price
-            var part = await _context.BoilerParts.FindAsync(order.BoilerPartId);
-
-            // Set the total price and other properties
-            order.TotalPrice = part.Price * order.quantity;
-            order.OrderedDateTime = DateTime.Now;
-            order.Delivered = false;
-            order.DeliveredDateTime = null;
+            var part = await _context.BoilerParts.FindAsync(boilerPartId);
+            Order order = new Order {
+                BoilerPartId = boilerPartId,
+                Quantity = quantity,
+                OrderedDateTime = DateTime.Now,
+                TotalPrice = quantity * part.Price
+            };
 
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();

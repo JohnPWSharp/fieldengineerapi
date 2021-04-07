@@ -13,5 +13,4 @@ namespace FieldEngineerApi.Models
         public string ContactNumber { get; set; }
         public List<Reservation> Reservations { get; set; }
     }
-
 }
