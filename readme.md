@@ -6,37 +6,45 @@ This repo also includes the JSON definition for the Logic App created in the doc
 
 ## Prerequisites
 
+You will need the following software on your computer:
+
 - PowerShell
 - .NET 5.0
 - git
 - Visual Studio Code
 - Azure Tools for Visual Studio Code
-- Azure subscription
-- Azure CLI
+
+You'll also need an Azure subscription.
+
+## Clone the sample code on your local computer
+
+To view and edit the code in this project, use `git` to clone this project on your hard drive:
+
+1. Start PowerShell and navigate to a directory where you want to keep the source code.
+1. To clone the source code, enter this command:
+
+    ```powershell
+    git clone https://github.com/microsoft/fusion-dev-ebook
+    cd fusion-dev-ebook
+    ```
 
 ## Set up an Azure SQL Database server
 
 The Web API requires three SQL databases:
 
-- ScheduleDB. This database stores appointment details.
 - InventoryDB. This database stores information about boiler parts and their stock numbers.
 - KnowledgeBaseDB. This database stores technical tips on each boiler part.
+- ScheduleDB. This database stores appointment details.
 
 You can set up these databases in Azure SQL Database by following these steps:
 
-1. Start PowerShell and navigate to a directory where you want to keep the source code.
-1. To clone the source code, enter this command:
-
-    <!-- TODO: Update this URL, when we know the final repo location -->
-    ```powershell
-    git clone https://github.com/alistairmatthews/fieldengineerapi.git
-    cd fieldengineerapi
-    ```
-
-1. To log into your Azure subscription run this command, and enter your credentials:
+1. Long into the [Azure Portal](https://portal.azure.com) with your usual credentials.
+1. Start the **Cloud Shell** and select the **PowerShell** environment.
+1. To clone the source code in the Cloud Shell, enter these commands:
 
     ```powershell
-    az login
+    git clone https://github.com/microsoft/fusion-dev-ebook
+    cd fusion-dev-ebook
     ```
 
 1. To create an Azure SQL Database server, run this command, and then enter a resource group name, SQL server name, and an Azure location, such as **westus**:
@@ -45,14 +53,21 @@ You can set up these databases in Azure SQL Database by following these steps:
     .\databasesetup.ps1
     ```
 
-<!-- TODO: execute the SQL scripts here. -->
-
-1. Log into the Azure portal, and navigate to **All resources**. Select the SQL Server you created in the previous step.
+1. In the Azure Portal, and navigate to **All resources**. Select the SQL Server you created in the previous step.
 1. Under **Security** select, **Firewalls and virtual networks**.
 1. Select **Add client IP**.
 1. Under **Allow Azure services and resources to access this server**, select **Yes**, and then select **Save**.
+1. In the Cloud Shell, to create the databases, run these commands, substituting `<yourservername>` with the name of the SQL Server you just created:
 
-## Configure the Web API and create databases
+<!-- TODO: this currently tries to create tables in Master -->
+
+    ```powershell
+    sqlcmd -S <yourservername>.database.windows.net -U sqladmin -P Pa55w.rd -i "./SQLScripts/InventoryDB-setup.sql"
+    sqlcmd -S <yourservername>.database.windows.net -U sqladmin -P Pa55w.rd -i "./SQLScripts/KnowledgeDB-setup.sql"
+    sqlcmd -S <yourservername>.database.windows.net -U sqladmin -P Pa55w.rd -i "./SQLScripts/SchedulesDB-setup.sql"
+    ```
+
+## Configure the Web API
 
 1. In your local **PowerShell** instance, start Visual Studio Code:
 
@@ -62,20 +77,6 @@ You can set up these databases in Azure SQL Database by following these steps:
 
 1. Open **appsettings.json**. There are three connections strings in the file. In each connection string, replace **fieldengineersqlserver** with the name of the SQL server you created above.
 1. Open **appsettings.Development.json**. In each connection string, replace **fieldengineersqlserver** with the name of the SQL server you created above.
-
-<!-- TODO: Remove these calls when the SQL Scripts are complete -->
-
-1. To create the databases by using Entity Framework, run these commands:
-
-    ```powershell
-    dotnet tool install --global dotnet-ef
-    dotnet ef migrations add InitialDeployment --context InventoryContext --output-dir Migrations/Inventory
-    dotnet ef database update --context InventoryContext
-    dotnet ef migrations add InitialDeployment --context ScheduleContext --output-dir Migrations/Schedule
-    dotnet ef database update --context ScheduleContext
-    dotnet ef migrations add InitialDeployment --context KnowledgeBaseContext --output-dir Migrations/KnowledgeBase
-    dotnet ef database update --context KnowledgeBaseContext
-    ```
 
 ## Deploy the Web API in the Azure App Service
 
