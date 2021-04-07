@@ -24,23 +24,14 @@ namespace FieldEngineerApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reservation>>> GetReservations()
         {
-            return await _context
-                .Reservations
-                .Include(r => r.BoilerPart)
-                .Include(r => r.Engineer)
-                .ToListAsync();
+            return await _context.Reservations.ToListAsync();
         }
 
         // GET: api/Reservations/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Reservation>> GetReservation(long id)
         {
-            var reservation = await _context
-                .Reservations
-                .Where(r => r.Id == id)
-                .Include(r => r.BoilerPart)
-                .Include(r => r.Engineer)
-                .FirstOrDefaultAsync();
+            var reservation = await _context.Reservations.FindAsync(id);
 
             if (reservation == null)
             {
@@ -84,8 +75,14 @@ namespace FieldEngineerApi.Controllers
         // POST: api/Reservations
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Reservation>> PostReservation(Reservation reservation)
+        public async Task<ActionResult<Reservation>> PostReservation(long boilerPartId, string engineerId, int quantityToReserve)
         {
+            Reservation reservation = new Reservation {
+                BoilerPartId = boilerPartId,
+                EngineerId = engineerId,
+                NumberToReserve = quantityToReserve
+            };
+
             _context.Reservations.Add(reservation);
             await _context.SaveChangesAsync();
 

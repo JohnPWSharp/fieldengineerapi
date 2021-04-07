@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using FieldEngineerApi.Models; 
+using FieldEngineerApi.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FieldEngineerApi
@@ -27,14 +27,18 @@ namespace FieldEngineerApi
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {            
-            services.AddDbContext<InventoryContext>(options => options.UseSqlServer(Configuration.GetConnectionString("InventoryDB")));
-            services.AddDbContext<KnowledgeBaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("KnowledgeDB"))); 
-            services.AddDbContext<ScheduleContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SchedulesDB")));
+        {
+            services.AddDbContext<InventoryContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("InventoryDB")));
+            services.AddDbContext<KnowledgeBaseContext>(options => 
+                options.UseSqlServer(Configuration.GetConnectionString("KnowledgeDB")));
+            services.AddDbContext<ScheduleContext>(options => 
+                options.UseSqlServer(Configuration.GetConnectionString("SchedulesDB")));
 
-            services.AddControllers().AddNewtonsoftJson( 
-                options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore 
+            services.AddControllers().AddNewtonsoftJson(
+                options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -50,7 +54,6 @@ namespace FieldEngineerApi
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FieldEngineerApi v1"));
 

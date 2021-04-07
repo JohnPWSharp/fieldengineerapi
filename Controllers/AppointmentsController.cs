@@ -35,15 +35,14 @@ namespace FieldEngineerApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Appointment>> GetAppointment(long id)
         {
-            var appointment =_context
-                .Appointments
+            var appointment = _context.Appointments
                 .Where(a => a.Id == id)
                 .Include(c => c.Customer)
                 .Include(e => e.Engineer)
                 .Include(s => s.AppointmentStatus);
-                
-            var appData = await appointment.FirstOrDefaultAsync();                
-                
+
+            var appData = await appointment.FirstOrDefaultAsync();
+
             if (appData == null)
             {
                 return NotFound();
@@ -59,7 +58,7 @@ namespace FieldEngineerApi.Controllers
         {
             var statusId = _context.AppointmentStatuses.First(s => s.StatusName == statusName).Id;
             var appointment =  _context.Appointments.First(e => e.Id == id);
-
+            
             if (appointment == null)
             {
                 return BadRequest();
