@@ -20,6 +20,14 @@ namespace FieldEngineerApi.Controllers
             _context = context;
         }
 
+        // GET: api/KnowledgeBaseBoilerPart/5/Tips
+        [HttpGet("{id}/Tips")]
+        public async Task<ActionResult<IEnumerable<KnowledgeBaseTip>>> GetTipsForPart(long id)
+        {
+            return await _context.Tips.Where(
+                t => t.KnowledgeBaseBoilerPartId == id).ToListAsync();
+        } 
+
         // GET: api/KnowledgeBaseBoilerPart
         [HttpGet]
         public async Task<ActionResult<IEnumerable<KnowledgeBaseBoilerPart>>> GetBoilerParts()
@@ -39,14 +47,6 @@ namespace FieldEngineerApi.Controllers
             }
 
             return knowledgeBaseBoilerPart;
-        }
-
-        // GET: api/KnowledgeBaseBoilerPart/5/Tips 
-        [HttpGet("{id}/Tips")] 
-        public async Task<ActionResult<IEnumerable<KnowledgeBaseTip>>> GetTipsForPart(long id) 
-        { 
-            return await _context.Tips.Where( 
-                t => t.KnowledgeBaseBoilerPartId == id).ToListAsync(); 
         }
 
         // PUT: api/KnowledgeBaseBoilerPart/5

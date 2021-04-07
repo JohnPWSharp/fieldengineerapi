@@ -20,6 +20,28 @@ namespace FieldEngineerApi.Controllers
             _context = context;
         }
 
+        //GET: api/Customers/5/Appointments
+        [HttpGet("{id}/Appointments")]
+        public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments(long id)
+        {
+            return await _context.Appointments
+                .Where(a => a.CustomerId == id)
+                .OrderByDescending(a => a.StartDateTime)
+                .ToListAsync();
+        }
+
+        //GET: api/Customers/5/Notes
+        [HttpGet("{id}/Notes")]
+        public async Task<ActionResult<IEnumerable<object>>> GetNotes(long id)
+        {
+            return await _context.Appointments
+                .Where(a => a.CustomerId == id)
+                .OrderByDescending(a => a.StartDateTime)
+                .Select(a => 
+                    new {a.StartDateTime, a.ProblemDetails, a.Notes})
+                .ToListAsync();
+        }
+
         // GET: api/Customer
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
@@ -40,27 +62,6 @@ namespace FieldEngineerApi.Controllers
 
             return customer;
         }
-
-        //GET: api/Customers/5/Appointments 
-        [HttpGet("{id}/Appointments")] 
-        public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments(long id) 
-        { 
-            return await _context.Appointments 
-                .Where(a => a.CustomerId == id) 
-                .OrderByDescending(a => a.StartDateTime) 
-                .ToListAsync(); 
-        } 
-
-        //GET: api/Customers/5/Notes 
-        [HttpGet("{id}/Notes")] 
-        public async Task<ActionResult<IEnumerable<object>>> GetNotes(long id) 
-        { 
-            return await _context.Appointments 
-                .Where(a => a.CustomerId == id) 
-                .OrderByDescending(a => a.StartDateTime) 
-                .Select(a =>  new {a.StartDateTime, a.ProblemDetails, a.Notes}) 
-                .ToListAsync(); 
-        } 
 
         // PUT: api/Customer/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

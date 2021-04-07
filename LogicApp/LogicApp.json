@@ -2,10 +2,10 @@
     "definition": {
         "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
         "actions": {
-            "CheckBoilerParts": {
+            "CheckBoilerPart": {
                 "inputs": {
                     "method": "GET",
-                    "uri": "https://fieldengineer.azurewebsites.net/api/BoilerParts/@{triggerBody()?['boilerPartId']}"
+                    "uri": "https://vanarsdelapim.azure-api.net/api/boilerparts/@{triggerBody()?['boilerPartId']}"
                 },
                 "runAfter": {},
                 "type": "Http"
@@ -13,10 +13,10 @@
             "CheckReservations": {
                 "inputs": {
                     "method": "GET",
-                    "uri": "https://fieldengineer.azurewebsites.net/api/BoilerParts/@{triggerBody()?['boilerPartId']}/Reserved"
+                    "uri": "https://vanarsdelapim.azure-api.net/api/boilerparts/@{triggerBody()?['boilerPartId']}/reserved"
                 },
                 "runAfter": {
-                    "ParseBoilerParts": [
+                    "ParseBoilerPart": [
                         "Succeeded"
                     ]
                 },
@@ -26,12 +26,12 @@
                 "actions": {
                     "PostOrder": {
                         "inputs": {
-                            "body": {
-                                "boilerPartId": "@triggerBody()?['boilerPartId']",
-                                "quantity": 50
-                            },
                             "method": "POST",
-                            "uri": "https://fieldengineer.azurewebsites.net/api/Orders"
+                            "queries": {
+                                "boilerPartId": "@{triggerBody()?['boilerPartId']}",
+                                "quantity": "50"
+                            },
+                            "uri": "https://vanarsdelapim.azure-api.net/api/orders"
                         },
                         "runAfter": {},
                         "type": "Http"
@@ -41,8 +41,8 @@
                     "and": [
                         {
                             "greater": [
-                                "@add(body('ParseReservations')?['totalReservations'], triggerBody()?['numberToReserve'])",
-                                "@body('ParseBoilerParts')?['numberInStock']"
+                                "@add(body('ParseReservations')?['totalReservations'], triggerBody()?['numberToReserve'])",
+                                "@body('ParseBoilerPart')?['numberInStock']"
                             ]
                         }
                     ]
@@ -54,14 +54,11 @@
                 },
                 "type": "If"
             },
-            "ParseBoilerParts": {
+            "ParseBoilerPart": {
                 "inputs": {
-                    "content": "@body('CheckBoilerParts')",
+                    "content": "@body('CheckBoilerPart')",
                     "schema": {
                         "properties": {
-                            "categoryId": {
-                                "type": "string"
-                            },
                             "id": {
                                 "type": "integer"
                             },
@@ -85,7 +82,7 @@
                     }
                 },
                 "runAfter": {
-                    "CheckBoilerParts": [
+                    "CheckBoilerPart": [
                         "Succeeded"
                     ]
                 },
@@ -115,13 +112,13 @@
             },
             "PostReservation": {
                 "inputs": {
-                    "body": {
-                        "boilerPartId": "@triggerBody()?['boilerPartId']",
-                        "engineerId": "@triggerBody()?['engineerId']",
-                        "numberToReserve": "@triggerBody()?['numberToReserve']"
-                    },
                     "method": "POST",
-                    "uri": "https://fieldengineer.azurewebsites.net/api/reservations/"
+                    "queries": {
+                        "boilerPartId": "@{triggerBody()?['boilerPartId']}",
+                        "engineerId": "@triggerBody()?['engineerId']",
+                        "quantityToReserve": "@{triggerBody()?['numberToReserve']}"
+                    },
+                    "uri": "https://vanarsdelapim.azure-api.net/api/reservations"
                 },
                 "runAfter": {
                     "CompareStock": [
@@ -129,6 +126,22 @@
                     ]
                 },
                 "type": "Http"
+            },
+            "Response": {
+                "inputs": {
+                    "body": "@body('PostReservation')",
+                    "headers": {
+                        "content-type": "application/json"
+                    },
+                    "statusCode": 200
+                },
+                "kind": "Http",
+                "runAfter": {
+                    "PostReservation": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Response"
             }
         },
         "contentVersion": "1.0.0.0",

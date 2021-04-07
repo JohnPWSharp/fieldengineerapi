@@ -20,6 +20,14 @@ namespace FieldEngineerApi.Controllers
             _context = context;
         }
 
+            // GET: api/KnowledgeBaseEngineer/5/Tips
+        [HttpGet("{id}/Tips")]
+        public async Task<ActionResult<IEnumerable<KnowledgeBaseTip>>> GetTipsForEngineer(string id)
+        {
+            return await _context.Tips.Where(
+                t => t.KnowledgeBaseEngineerId == id).ToListAsync();
+         }
+
         // GET: api/KnowledgeBaseEngineer
         [HttpGet]
         public async Task<ActionResult<IEnumerable<KnowledgeBaseEngineer>>> GetEngineers()
@@ -39,14 +47,6 @@ namespace FieldEngineerApi.Controllers
             }
 
             return knowledgeBaseEngineer;
-        }
-
-        // GET: api/KnowledgeBaseEngineer/5/Tips 
-        [HttpGet("{id}/Tips")] 
-        public async Task<ActionResult<IEnumerable<KnowledgeBaseTip>>> GetTipsForEngineer(string id) 
-        { 
-            return await _context.Tips.Where( 
-                t => t.KnowledgeBaseEngineerId == id).ToListAsync(); 
         }
 
         // PUT: api/KnowledgeBaseEngineer/5
@@ -86,9 +86,23 @@ namespace FieldEngineerApi.Controllers
         public async Task<ActionResult<KnowledgeBaseEngineer>> PostKnowledgeBaseEngineer(KnowledgeBaseEngineer knowledgeBaseEngineer)
         {
             _context.Engineers.Add(knowledgeBaseEngineer);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (KnowledgeBaseEngineerExists(knowledgeBaseEngineer.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-            return CreatedAtAction("GetKnowledgeBaseEngineer", new { Id = knowledgeBaseEngineer.Id }, knowledgeBaseEngineer);
+            return CreatedAtAction("GetKnowledgeBaseEngineer", new { id = knowledgeBaseEngineer.Id }, knowledgeBaseEngineer);
         }
 
         // DELETE: api/KnowledgeBaseEngineer/5

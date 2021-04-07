@@ -20,6 +20,19 @@ namespace FieldEngineerApi.Controllers
             _context = context;
         }
 
+        // GET: api/ScheduleEngineer/5/Appointments
+        [HttpGet("{id}/Appointments")]
+        public async Task<ActionResult<IEnumerable<Appointment>>> GetScheduleEngineerAppointments(string id)
+        {
+            return await _context.Appointments
+                .Where(a => a.EngineerId == id)
+                .OrderByDescending(a => a.StartDateTime)
+                .Include(c => c.Customer)
+                .Include(e => e.Engineer)
+                .Include(s => s.AppointmentStatus)
+                .ToListAsync();
+        }
+
         // GET: api/ScheduleEngineer
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ScheduleEngineer>>> GetEngineers()
@@ -40,16 +53,6 @@ namespace FieldEngineerApi.Controllers
 
             return scheduleEngineer;
         }
-
-        // GET: api/ScheduleEngineer/5/Appointments 
-        [HttpGet("{id}/Appointments")] 
-        public async Task<ActionResult<IEnumerable<Appointment>>> GetScheduleEngineerAppointments(string id) 
-        { 
-            return await _context.Appointments  
-                .Where(a => a.EngineerId == id) 
-                .OrderByDescending(a => a.StartDateTime) 
-                .ToListAsync(); 
-        } 
 
         // PUT: api/ScheduleEngineer/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -88,9 +91,23 @@ namespace FieldEngineerApi.Controllers
         public async Task<ActionResult<ScheduleEngineer>> PostScheduleEngineer(ScheduleEngineer scheduleEngineer)
         {
             _context.Engineers.Add(scheduleEngineer);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (ScheduleEngineerExists(scheduleEngineer.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-            return CreatedAtAction("GetScheduleEngineer", new { Id = scheduleEngineer.Id }, scheduleEngineer);
+            return CreatedAtAction("GetScheduleEngineer", new { id = scheduleEngineer.Id }, scheduleEngineer);
         }
 
         // DELETE: api/ScheduleEngineer/5
