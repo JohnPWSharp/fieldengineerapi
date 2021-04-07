@@ -84,9 +84,10 @@ You can set up these databases in Azure SQL Database by following these steps:
     <!-- TODO: this currently tries to create tables in Master -->
 
     ```powershell
-    sqlcmd -S <yourservername>.database.windows.net -U sqladmin -P Pa55w.rd -i "./SQLScripts/InventoryDB-setup.sql"
-    sqlcmd -S <yourservername>.database.windows.net -U sqladmin -P Pa55w.rd -i "./SQLScripts/KnowledgeDB-setup.sql"
-    sqlcmd -S <yourservername>.database.windows.net -U sqladmin -P Pa55w.rd -i "./SQLScripts/SchedulesDB-setup.sql"
+    sqlcmd -S <yourservername>.database.windows.net -U sqladmin -P Pa55w.rd -i "./SQLScripts/CreateAllDBs.sql"
+    sqlcmd -S <yourservername>.database.windows.net -U sqladmin -P Pa55w.rd -d InventoryDB -i "./SQLScripts/InventoryDB-setup.sql"
+    sqlcmd -S <yourservername>.database.windows.net -U sqladmin -P Pa55w.rd -d KnowledgeDB -i "./SQLScripts/KnowledgeDB-setup.sql"
+    sqlcmd -S <yourservername>.database.windows.net -U sqladmin -P Pa55w.rd -d SchedulesDB -i "./SQLScripts/SchedulesDB-setup.sql"
     ```
 
 ## Configure the Web API
