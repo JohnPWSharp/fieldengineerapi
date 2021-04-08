@@ -865,9 +865,6 @@ SET IDENTITY_INSERT [dbo].[Appointments] ON
 
 GO 
 
-DROP TABLE #SampleDataTable;
-GO
-
 CREATE TABLE #SampleDataTable (
     Id INT,
     Description NVARCHAR(max),
