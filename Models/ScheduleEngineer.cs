@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 
@@ -11,6 +12,8 @@ namespace FieldEngineerApi.Models
         [Required]
         public string Name { get; set; }
         public string ContactNumber { get; set; }
+        
+        [JsonIgnore]
         public virtual ICollection<Appointment> Appointments { get; set; }
     }
 
